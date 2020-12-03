@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ims.model.Brands;
 import com.ims.model.Product;
+import com.ims.service.BrandsService;
 import com.ims.service.ProductService;
 
 @Controller
@@ -20,6 +22,11 @@ public class ProductController {
 	@Autowired
 	private ProductService service;
 	
+	@Autowired
+	private BrandsService brandService;
+	
+	
+
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
 		
@@ -58,6 +65,37 @@ public class ProductController {
 		service.delete(id);
 		return "redirect:/";		
 	}
+	
+	// -------------------------------------------------BRANDS
+	
+	@RequestMapping("/brands")
+	public String viewBrandPage(Model model) {
+		
+		List<Brands> listBrands = brandService.listAll();
+		model.addAttribute("listBrands", listBrands);
+		
+		return "brands";
+	}
+	
+	
+	
+	@RequestMapping("/newbrand")
+	public String showNewBrandPage(Model model) {
+		Brands brand = new Brands();
+		model.addAttribute("brand", brand);
+		
+		return "new_brand";
+	}
+	
+	@RequestMapping(value="/save_brand", method = RequestMethod.POST)
+	public String saveBrand(@ModelAttribute ("brand") Brands brand) {
+		brandService.save(brand);
+		return "redirect:/";
+		
+	}
+	
+
+	
 	
 	
 

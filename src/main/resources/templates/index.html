@@ -18,8 +18,12 @@
 	</form>
 	
 	<h1>Product Manager</h1>
-	<div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+	<div sec:authorize="hasAnyAuthority('ADMIN')">
 		<a href="new">Create New Product</a>
+	</div>
+	
+	<div sec:authorize="hasAnyAuthority('ADMIN')">
+		<a href="newbrand">Create New Brand</a>
 	</div>
 	
 	<br/><br/>
