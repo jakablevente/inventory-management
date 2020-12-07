@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <title>Product Manager</title>
 </head>
 <body>
@@ -23,11 +25,16 @@
 	</div>
 	
 	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="newbrand">Create New Brand</a>
+		<a href="brands">Brand</a>
+	</div>
+	
+	<div sec:authorize="hasAnyAuthority('ADMIN')">
+		<a href="category">Categories</a>
 	</div>
 	
 	<br/><br/>
-	<table border="1" cellpadding="10">
+	<div class="container">
+	<table cellpadding="10" class="table table-hover table-bordered">
 		<thead>
 			<tr>
 				<th>Product ID</th>
@@ -58,6 +65,12 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
