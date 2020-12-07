@@ -3,69 +3,57 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <title>Product Manager</title>
 </head>
 <body>
-<div align="center">	
-	<div sec:authorize="isAuthenticated()">
-		Welcome <b><span sec:authentication="name">Username</span></b>
-		&nbsp;
-		<i><span sec:authentication="principal.authorities">Roles</span></i>
+
+
+<div class ="d-flex" id="wrapper">
+	
+
+	
+<div class="bg-dark border-right" id="sidebar-wrapper">
+	<div class="sidebar-heading">Inventory Management</div>
+	<div class="list-group list-group-flush">
+		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Dashboard</a>
+		<a href="product" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
+		<a href="brands" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Attributes</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
 	</div>
+	
+	<div class="list-group-item list-group-item-action bg-dark" sec:authorize="isAuthenticated()">
+	<i class="material-icons">account_circle </i>
+		<span sec:authentication="name">Username</span>
+		&nbsp;
+		<i><span sec:authentication="principal.authorities"></span></i>
 		
+	</div>
+	&nbsp;
 	<form th:action="@{/logout}" method="post">
-		<input type="submit" value="Logout" />
+		<button class="btn btn-outline-dark" type="submit">Logout</button>
 	</form>
 	
-	<h1>Product Manager</h1>
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="new">Create New Product</a>
-	</div>
-	
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="brands">Brand</a>
-	</div>
-	
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="category">Categories</a>
-	</div>
-	
-	<br/><br/>
-	<div class="container">
-	<table cellpadding="10" class="table table-hover table-bordered">
-		<thead>
-			<tr>
-				<th>Product ID</th>
-				<th>Name</th>
-				<th>Brand</th>
-				<th>Quantity</th>
-				<th>Price</th>
-				<th>Attribute</th>
-				
-				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
-				
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="product : ${listProducts}">
-				<td th:text="${product.id}">Product ID</td>
-				<td th:text="${product.name}">Name</td>
-				<td th:text="${product.brand}">Brand</td>
-				<td th:text="${product.qty}">Quantity</td>
-				<td th:text="${product.price}">Price</td>
-				<td th:text="${product.attribute}">Attribute</td>
-				
-				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>			
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
+</div>
+
+
+
+<div id="page-content-wrapper">
+
+      <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+      </div>
+    </div>
+    
+
+
+
+
 </div>
 
 

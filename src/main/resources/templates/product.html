@@ -45,33 +45,42 @@
 
 <div id="page-content-wrapper">
 
-<h1>Brand Manager</h1>
-	
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="newbrand">Create New Brand</a>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+		<a href="new">Create New Product</a>
 	</div>
-	
-	<br/><br/>
-	<table border="1" cellpadding="10">
+<div class="container">
+	<table cellpadding="10" class="table table-hover table-bordered">
 		<thead>
 			<tr>
 				<th>Product ID</th>
+				<th>Name</th>
 				<th>Brand</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Attribute</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="brand : ${listBrands}">
-				<td th:text="${brand.id}">Product ID</td>
-				<td th:text="${brand.name}">Name</td>
-
+			<tr th:each="product : ${listProducts}">
+				<td th:text="${product.id}">Product ID</td>
+				<td th:text="${product.name}">Name</td>
+				<td th:text="${product.brand}">Brand</td>
+				<td th:text="${product.qty}">Quantity</td>
+				<td th:text="${product.price}">Price</td>
+				<td th:text="${product.attribute}">Attribute</td>
 				
+				<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-</div>
+	</div>
     </div>
     
     <!-- /#page-content-wrapper -->

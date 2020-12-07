@@ -35,10 +35,16 @@ public class ProductController {
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
 		
+		return "index";
+	}
+	
+	@RequestMapping("/product")
+	public String viewProductPage(Model model) {
+		
 		List<Product> listProducts = service.listAll();
 		model.addAttribute("listProducts", listProducts);
 		
-		return "index";
+		return "product";
 	}
 	
 	@RequestMapping("/new")
