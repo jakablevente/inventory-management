@@ -105,6 +105,22 @@ public class ProductController {
 		
 	}
 	
+	@RequestMapping("/edit_brand/{id}")
+	public String showEditBrandPage(@PathVariable(name = "id") int id, Model model) {
+
+		Brands brand = brandService.get(id);
+		
+		model.addAttribute("brand", brand);
+		
+		return "edit_brand";
+	}
+	
+	@RequestMapping("/delete_brand/{id}")
+	public String deleteBrand(@PathVariable(name = "id") int id) {
+		brandService.delete(id);
+		return "redirect:/";
+	}
+	
 	//-----------------------------CATEGORY
 	
 	@RequestMapping("/category")
