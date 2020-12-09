@@ -58,6 +58,18 @@
 				<tr>
 					<td>Brand:</td>
 					<td><input type="text" th:field="*{brand}" /></td>
+					<td>
+						 <select class="form-control selectpicker" th:field="*{brand.id}" name="brand" id="brand">
+                        <option value="">Nothing selected</option>
+                        <option th:each="brand : ${brand}}"
+                                th:value="${brand.id}"
+                                th:text="${brand.name}">
+                                </option>
+                       
+
+                    </select>
+					</td>
+					
 				</tr>				
 				<tr>
 					<td>Qty:</td>
