@@ -47,9 +47,10 @@
 
 <h1>Brand Manager</h1>
 	
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="newbrand">Create New Brand</a>
-	</div>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Add Brand
+</button>
 	
 	<br/><br/>
 	<table border="1" cellpadding="10">
@@ -78,6 +79,37 @@
 	</table>
 </div>
     </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save_brand}" th:object="${brand}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Brand Name:</td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>			
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+	
     
     <!-- /#page-content-wrapper -->
 

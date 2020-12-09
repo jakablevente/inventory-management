@@ -89,23 +89,20 @@ public class ProductController {
 		List<Brands> listBrands = brandService.listAll();
 		model.addAttribute("listBrands", listBrands);
 		
+		Brands brand = new Brands();
+		model.addAttribute("brand", brand);
+		
 		return "brands";
 	}
 	
 	
 	
-	@RequestMapping("/newbrand")
-	public String showNewBrandPage(Model model) {
-		Brands brand = new Brands();
-		model.addAttribute("brand", brand);
-		
-		return "new_brand";
-	}
+
 	
 	@RequestMapping(value="/save_brand", method = RequestMethod.POST)
 	public String saveBrand(@ModelAttribute ("brand") Brands brand) {
 		brandService.save(brand);
-		return "redirect:/";
+		return "redirect:/brands";
 		
 	}
 	
@@ -122,7 +119,7 @@ public class ProductController {
 	@RequestMapping("/delete_brand/{id}")
 	public String deleteBrand(@PathVariable(name = "id") int id) {
 		brandService.delete(id);
-		return "redirect:/";
+		return "redirect:/brands";
 	}
 	
 	//-----------------------------CATEGORY
@@ -148,7 +145,22 @@ public class ProductController {
 		
 		categoryService.save(category);
 		
-		return "redirect:/";
+		return "redirect:/category";
+	}
+	
+	@RequestMapping("/delete_category/{id}")
+	public String deleteCategory(@PathVariable(name = "id") int id) {
+		categoryService.delete(id);
+		return "redirect:/category";
+	}
+	
+	@RequestMapping("/edit_category/{id}")
+	public String editCategory(@PathVariable(name = "id") int id, Model model) {
+		Category category = categoryService.get(id);
+		
+		model.addAttribute("category", category);
+		
+		return "edit_category";
 	}
 	
 
