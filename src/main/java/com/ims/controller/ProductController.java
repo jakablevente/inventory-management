@@ -31,16 +31,6 @@ public class ProductController {
 	@Autowired
 	private ProductService service;
 	
-	@Autowired
-	private BrandsService brandService;
-	
-	
-
-	@RequestMapping("/")
-	public String viewHomePage(Model model) {
-		
-		return "index";
-	}
 	
 	@RequestMapping("/product")
 	public String viewProductPage(Model model) {
@@ -81,52 +71,8 @@ public class ProductController {
 		return "redirect:/";		
 	}
 	
-	// -------------------------------------------------BRANDS
-	
-	@RequestMapping("/brands")
-	public String viewBrandPage(Model model) {
-		
-		List<Brands> listBrands = brandService.listAll();
-		model.addAttribute("listBrands", listBrands);
-		
-		Brands brand = new Brands();
-		model.addAttribute("brand", brand);
-		
-		
-		
-		return "brands";
-	}
-	
-	
 	
 
-	
-	@RequestMapping(value="/save_brand", method = RequestMethod.POST)
-	public String saveBrand(@ModelAttribute ("brand") Brands brand) {
-		brandService.save(brand);
-		return "redirect:/brands";
-		
-	}
-	
-	@RequestMapping("/edit_brand/{id}")
-	public String showEditBrandPage(@PathVariable(name = "id") int id, Model model) {
-
-		Brands brand = brandService.get(id);
-		
-		model.addAttribute("brand", brand);
-
-		
-		return "edit_brand";
-	}
-	
-	
-	@RequestMapping("/delete_brand/{id}")
-	public String deleteBrand(@PathVariable(name = "id") int id) {
-		brandService.delete(id);
-		return "redirect:/brands";
-	}
-	
-	//-----------------------------CATEGORY
 	
 	
 	}
