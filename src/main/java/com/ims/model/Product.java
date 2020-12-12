@@ -28,7 +28,7 @@ public class Product {
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = false)
+	@JoinColumn(name = "category_id")
 	private Category category;
 	
 	@ManyToOne
@@ -125,6 +125,7 @@ public class Product {
 	public void setAttribute(Set<Attribute> attribute) {
 		this.attribute = attribute;
 	}
+	
 	
 	
 	

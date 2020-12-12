@@ -1,6 +1,7 @@
 package com.ims.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ims.model.Brands;
@@ -30,9 +33,6 @@ public class ProductController {
 	
 	@Autowired
 	private BrandsService brandService;
-	
-	@Autowired
-	private CategoryService categoryService;
 	
 	
 
@@ -92,6 +92,8 @@ public class ProductController {
 		Brands brand = new Brands();
 		model.addAttribute("brand", brand);
 		
+		
+		
 		return "brands";
 	}
 	
@@ -112,9 +114,11 @@ public class ProductController {
 		Brands brand = brandService.get(id);
 		
 		model.addAttribute("brand", brand);
+
 		
 		return "edit_brand";
 	}
+	
 	
 	@RequestMapping("/delete_brand/{id}")
 	public String deleteBrand(@PathVariable(name = "id") int id) {
@@ -124,48 +128,15 @@ public class ProductController {
 	
 	//-----------------------------CATEGORY
 	
-	@RequestMapping("/category")
-	public String viewCategoryPage(Model model) {
-		
-		List<Category> listCategory = categoryService.listAll();
-		model.addAttribute("listCategory", listCategory);
-		
-		Category category = new Category();
-		model.addAttribute("category", category);
-		
-		return "category";
+	
 	}
-	
-	
 
 	
-	
-	@RequestMapping(value="/addcategory",method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute ("category") Category category) {
-		
-		categoryService.save(category);
-		
-		return "redirect:/category";
-	}
-	
-	@RequestMapping("/delete_category/{id}")
-	public String deleteCategory(@PathVariable(name = "id") int id) {
-		categoryService.delete(id);
-		return "redirect:/category";
-	}
-	
-	@RequestMapping("/edit_category/{id}")
-	public String editCategory(@PathVariable(name = "id") int id, Model model) {
-		Category category = categoryService.get(id);
-		
-		model.addAttribute("category", category);
-		
-		return "edit_category";
-	}
+
 	
 
 	
 	
 	
 
-}
+

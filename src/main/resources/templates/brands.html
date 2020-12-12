@@ -56,7 +56,7 @@
 	<table border="1" cellpadding="10">
 		<thead>
 			<tr>
-				<th>Product ID</th>
+				<th>Brand ID</th>
 				<th>Brand</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
@@ -65,11 +65,50 @@
 		</thead>
 		<tbody>
 			<tr th:each="brand : ${listBrands}">
-				<td th:text="${brand.id}">Product ID</td>
+				<td th:text="${brand.id}">Brand ID</td>
 				<td th:text="${brand.name}">Name</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{'/edit_brand/' + ${brand.id}}">Edit</a>			
+					<div sec:authorize="hasAnyAuthority('ADMIN')">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editCat">
+  Edit
+</button>
+	</div>
+	
+	<div class="modal fade" id="editCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save_brand}" th:object="${brand}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+			<tr>
+					<td>Brand ID:</td>
+					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
+				</tr>	
+				<tr>
+					<td>Brand Name:</td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>			
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>		
+				<a th:href="@{'/edit_brand/' + ${brand.id}}">Edit</a>		
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_brand/' + ${brand.id}}">Delete</a>
 				</td>
