@@ -55,9 +55,9 @@
 				<th>Product ID</th>
 				<th>Name</th>
 				<th>Brand</th>
+				<th>Category</th>
 				<th>Quantity</th>
 				<th>Price</th>
-				<th>Attribute</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -68,9 +68,9 @@
 				<td th:text="${product.id}">Product ID</td>
 				<td th:text="${product.name}">Name</td>
 				<td th:text="${product.brand}">Brand</td>
+				<td th:text="${product.category}">Category</td>
 				<td th:text="${product.qty}">Quantity</td>
 				<td th:text="${product.price}">Price</td>
-				<td th:text="${product.attribute}">Attribute</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
 					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>			

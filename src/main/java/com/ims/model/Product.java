@@ -1,16 +1,11 @@
 package com.ims.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,21 +30,13 @@ public class Product {
 	@JoinColumn(name = "brand_id")
 	private Brands brand;
 	
-	@OneToMany
-	@JoinTable(name = "attribute_value",
-	joinColumns=@JoinColumn(name = "id"),
-	inverseJoinColumns = @JoinColumn(name="attribute_id")
-	)
-	public Set<Attribute> attribute = new HashSet<>();
 	
 	public Product() {
 		
 	}
-	
-	
-	public Product(int id, String name, String price, String qty, String image,
-			Category category, Brands brand,Set<Attribute> attribute) {
-		
+
+	public Product(int id, String name, String price, String qty,
+ String image, Category category, Brands brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,9 +45,7 @@ public class Product {
 		this.image = image;
 		this.category = category;
 		this.brand = brand;
-		this.attribute = attribute;
 	}
-
 
 	public int getId() {
 		return id;
@@ -117,17 +102,5 @@ public class Product {
 	public void setBrand(Brands brand) {
 		this.brand = brand;
 	}
-
-	public Set<Attribute> getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(Set<Attribute> attribute) {
-		this.attribute = attribute;
-	}
-	
-	
-	
-	
 	
 }
