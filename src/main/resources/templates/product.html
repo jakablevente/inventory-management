@@ -1,52 +1,12 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-<meta charset="utf-8">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<title>Product Manager</title>
-</head>
-<body>
-
-
-<div class ="d-flex" id="wrapper">
-	
-
-	
-<div class="bg-dark border-right" id="sidebar-wrapper">
-	<div class="sidebar-heading">Inventory Management</div>
-	<div class="list-group list-group-flush">
-		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Dashboard</a>
-		<a href="product" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
-		<a href="brands" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Attributes</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
-	</div>
-	
-	<div class="list-group-item list-group-item-action bg-dark" sec:authorize="isAuthenticated()">
-	<i class="material-icons">account_circle </i>
-		<span sec:authentication="name">Username</span>
-		&nbsp;
-		<i><span sec:authentication="principal.authorities"></span></i>
-		
-	</div>
-	&nbsp;
-	<form th:action="@{/logout}" method="post">
-		<button class="btn btn-outline-dark" type="submit">Logout</button>
-	</form>
-	
-</div>
-
-
+<th:block th:include="layout :: top"></th:block>
+<th:block th:include="layout :: menu"></th:block>
 
 <div id="page-content-wrapper">
 
 <div sec:authorize="hasAnyAuthority('ADMIN')">
-		<a href="new">Create New Product</a>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+  Add product
+	</button>
 	</div>
 <div class="container">
 	<table cellpadding="10" class="table table-hover table-bordered">
@@ -73,7 +33,7 @@
 				<td th:text="${product.price}">Price</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>			
+					<a th:href="@{findProduct/(id=${product.id})}" class="btn btn-warning editProd">Edit</a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
 				</td>
@@ -84,15 +44,61 @@
     </div>
     
     <!-- /#page-content-wrapper -->
-
-
-
-
+    
+	 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addPModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save}" th:object="${product}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Product ID:</td>
+					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
+				</tr>			
+				<tr>
+					<td>Product Name:</td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>
+				<tr>
+					<td>Brand:</td>
+					<td><input type="text" th:field="*{brand}" /></td>
+				</tr>				
+				<tr>
+					<td>Category</td>
+					<td><input type="text" th:field="*{category}" /></td>
+				</tr>				
+				<tr>
+					<td>Price:</td>
+					<td><input type="text" th:field="*{price}" /></td>
+				</tr>	
+					<tr>
+					<td>Qty:</td>
+					<td><input type="text" th:field="*{qty}" /></td>
+				</tr>			
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
 </div>
+    
+    
+    
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-</html>
+
+
+<th:block th:include="layout :: script"></th:block>

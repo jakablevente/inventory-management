@@ -1,0 +1,62 @@
+<th:block th:fragment="top"><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>Product Manager</title>
+</head>
+
+<body>
+</th:block>
+
+
+<th:block th:fragment="menu">
+	<div class ="d-flex" id="wrapper">
+	
+
+	
+<div class="bg-dark border-right" id="sidebar-wrapper">
+	<div class="sidebar-heading">Inventory Management</div>
+	<div class="list-group list-group-flush">
+		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Dashboard</a>
+		<a href="product" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
+		<a href="brands" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Attributes</a>
+		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
+	</div>
+	
+	<div class="list-group-item list-group-item-action bg-dark" sec:authorize="isAuthenticated()">
+	<i class="material-icons">account_circle </i>
+		<span sec:authentication="name">Username</span>
+		&nbsp;
+		<i><span sec:authentication="principal.authorities"></span></i>
+		
+	</div>
+	&nbsp;
+	<form th:action="@{/logout}" method="post">
+		<button class="btn btn-outline-dark" type="submit">Logout</button>
+	</form>
+	
+</div>
+</th:block>
+
+
+<!-- jQuery library -->
+<th:block th:fragment="script">
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+</body>
+</html>
+</th:block>
