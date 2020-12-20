@@ -41,9 +41,9 @@ public class ProductController {
 		
 		Product product = new Product();
 		model.addAttribute("listProducts", listProducts);
-		model.addAttribute("product", product);
 		model.addAttribute("listCategories",listCategories);
 		model.addAttribute("listBrands", listBrands);
+		model.addAttribute("product", product);
 		
 		return "product";
 	}
@@ -53,14 +53,14 @@ public class ProductController {
 	public String saveProduct(@ModelAttribute("product") Product product) {
 		productService.save(product);
 		
-		return "redirect:/";
+		return "redirect:/product";
 	}
 	
 	
 	@RequestMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable(name = "id") int id) {
 		productService.delete(id);
-		return "redirect:/";		
+		return "redirect:/product";		
 	}
 	
 	@RequestMapping("/findProduct")

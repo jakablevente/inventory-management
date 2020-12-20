@@ -1,5 +1,6 @@
 package com.ims.model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,9 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="product")
-public class Product {
+public class Product  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
