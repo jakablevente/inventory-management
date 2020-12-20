@@ -27,8 +27,8 @@
 			<tr th:each="product : ${listProducts}">
 				<td th:text="${product.id}">Product ID</td>
 				<td th:text="${product.name}">Name</td>
-				<td th:text="${product.brand}">Brand</td>
-				<td th:text="${product.category}">Category</td>
+				<td th:text="${product.brands.name}">Brand</td>
+				<td th:text="${product.category.categoryName}">Category</td>
 				<td th:text="${product.qty}">Quantity</td>
 				<td th:text="${product.price}">Price</td>
 				
@@ -68,11 +68,21 @@
 				</tr>
 				<tr>
 					<td>Brand:</td>
-					<td><input type="text" th:field="*{brand}" /></td>
+					<td><select th:field="*{brands}" >
+						<th:block th:each="brands : ${listBrands}">
+							<option th:text="${brands.name}" th:value="${brands.id}"/>
+						</th:block>
+					</select>
+					</td>
 				</tr>				
 				<tr>
 					<td>Category</td>
-					<td><input type="text" th:field="*{category}" /></td>
+					<td><select th:field="*{category}" >
+						<th:block th:each="category : ${listCategories}">
+							<option th:text="${category.categoryName}" th:value="${category.id}"/>
+						</th:block>
+					</select>
+					</td>
 				</tr>				
 				<tr>
 					<td>Price:</td>

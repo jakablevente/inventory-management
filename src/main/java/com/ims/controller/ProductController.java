@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.ims.model.Brands;
+import com.ims.model.Category;
 import com.ims.model.Product;
+import com.ims.service.BrandsService;
+import com.ims.service.CategoryService;
 import com.ims.service.ProductService;
 
 @Controller
@@ -21,15 +24,26 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
+	private BrandsService brandService;
+	
 	
 	@RequestMapping("/product")
 	public String viewProductPage(Model model) {
+	
 		
+		List<Brands> listBrands = brandService.listAll();
+		List<Category> listCategories = categoryService.listAll();
 		List<Product> listProducts = productService.listAll();
-		model.addAttribute("listProducts", listProducts);
 		
 		Product product = new Product();
+		model.addAttribute("listProducts", listProducts);
 		model.addAttribute("product", product);
+		model.addAttribute("listCategories",listCategories);
+		model.addAttribute("listBrands", listBrands);
 		
 		return "product";
 	}

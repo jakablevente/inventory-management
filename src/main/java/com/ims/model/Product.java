@@ -1,6 +1,7 @@
 package com.ims.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,32 +20,29 @@ public class Product {
 	private String name;
 	private String price;
 	private String qty;
-	private String image;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brand_id")
-	private Brands brand;
+	private Brands brands;
 	
 	
 	public Product() {
 		
 	}
 
-	public Product(int id, String name, String price, String qty,
- String image, Category category, Brands brand) {
+	public Product(int id, String name, String price, String qty, Category category, Brands brands) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.qty = qty;
-		this.image = image;
 		this.category = category;
-		this.brand = brand;
+		this.brands = brands;
 	}
 
 	public int getId() {
@@ -79,13 +77,6 @@ public class Product {
 		this.qty = qty;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public Category getCategory() {
 		return category;
@@ -95,12 +86,12 @@ public class Product {
 		this.category = category;
 	}
 
-	public Brands getBrand() {
-		return brand;
+	public Brands getBrands() {
+		return brands;
 	}
 
-	public void setBrand(Brands brand) {
-		this.brand = brand;
+	public void setBrands(Brands brand) {
+		this.brands = brand;
 	}
 	
 }
