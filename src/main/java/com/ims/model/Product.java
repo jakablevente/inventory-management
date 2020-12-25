@@ -20,8 +20,8 @@ public class Product  {
 	private int id;
 	
 	private String name;
-	private String price;
-	private String qty;
+	private double price;
+	private int qty;
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +37,7 @@ public class Product  {
 		
 	}
 
-	public Product(int id, String name, String price, String qty, Category category, Brands brands) {
+	public Product(int id, String name, double price, int qty, Category category, Brands brands) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -63,22 +63,21 @@ public class Product  {
 		this.name = name;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public String getQty() {
+	public int getQty() {
 		return qty;
 	}
 
-	public void setQty(String qty) {
+	public void setQty(int qty) {
 		this.qty = qty;
 	}
-
 
 	public Category getCategory() {
 		return category;
@@ -92,8 +91,20 @@ public class Product  {
 		return brands;
 	}
 
-	public void setBrands(Brands brand) {
-		this.brands = brand;
+	public void setBrands(Brands brands) {
+		this.brands = brands;
 	}
+	
+	public void removeQty(int qty) {
+		int restQty = this.qty -= qty;
+		this.qty = restQty;
+	}
+	
+	public void addQty(int qty) {
+		this.qty += qty;
+	}
+	
+	
+
 	
 }

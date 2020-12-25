@@ -1,0 +1,105 @@
+<th:block th:include="layout :: top"></th:block>
+<th:block th:include="layout :: menu"></th:block>
+
+<div id="page-content-wrapper">
+
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+  Add Order
+	</button>
+	</div>
+<div class="container">
+	<table cellpadding="10" class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>Order ID</th>
+				<th>Date</th>
+				<th>Total</th>
+				<th>Paid Status</th>
+				<th>Customer</th>
+				<th>Price</th>
+				
+				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="order : ${listOrder}">
+				<td th:text="${order.id}">Order ID</td>
+				<td th:text="${order.dateTime}">Date</td>
+				<td th:text="${order.total}">Total</td>
+				<td th:text="${order.paidStatus}">PaidStatus</td>
+				<td th:text="${order.customer.name}">Customer</td>
+				
+				<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{/findOrder/(id=${order.id})}" class="btn btn-warning editOrder">Edit</a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${order.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+    </div>
+    
+    <!-- /#page-content-wrapper -->
+    
+    
+        <!-- /#page-content-wrapper -->
+    
+	 <div class="modal fade" id="addOrderModal" tabindex="-1" role="dialog" aria-labelledby="addOModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addOModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save_order}" th:object="${order}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Customer</td>
+					<td><select th:field="*{customer}" class="form-control" >
+						<th:block th:each="customer : ${listCustomers}">
+							<option th:text="${customer.name}" th:value="${customer.id}"/>
+						</th:block>
+					</select>
+					</td>
+				</tr>			
+				<tr>
+					<td>Product:</td>
+					<td><select th:field="*{product}" class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name}" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td>
+				</tr>					
+				<tr>
+					<td>Price:</td>
+					<td><input type="text" th:field="*{paidStatus}" /></td>
+				</tr>	
+					<tr>
+					<td>Qty:</td>
+					<td><input type="text" th:field="*{total}" /></td>
+				</tr>			
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<th:block th:include="layout :: script"></th:block>

@@ -1,0 +1,148 @@
+<th:block th:include="layout :: top"></th:block>
+<th:block th:include="layout :: menu"></th:block>
+
+<div id="page-content-wrapper">
+
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCustomerModal">
+  Add Customer
+	</button>
+	</div>
+<div class="container">
+	<table cellpadding="10" class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>Customer ID</th>
+				<th>Name</th>
+				<th>E-mail</th>
+				<th>Phone</th>
+				<th>Address</th>
+				
+				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="customer : ${listCustomers}">
+				<td th:text="${customer.id}">Customer ID</td>
+				<td th:text="${customer.name}">Name</td>
+				<td th:text="${customer.email}">E-mail</td>
+				<td th:text="${customer.phone}">Phone</td>
+				<td th:text="${customer.address}">Address</td>
+				
+				<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{/findCustomer/(id=${customer.id})}" class="btn btn-warning editCustomer">Edit</a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_customer/' + ${customer.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+    </div>
+    
+    <!-- /#page-content-wrapper -->
+    
+	 <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCustomerModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save_customer}" th:object="${customer}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Customer ID:</td>
+					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
+				</tr>			
+				<tr>
+					<td> Name:</td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>
+				<tr>
+					<td>E-mail:</td>
+					<td><input type="text" th:field="*{email}"/></td>
+				</tr>				
+				<tr>
+					<td>Phone:</td>
+					<td><input type="text" th:field="*{phone}" /></td>
+				</tr>				
+				<tr>
+					<td>Address:</td>
+					<td><input type="text" th:field="*{address}" /></td>
+				</tr>		
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal -->
+      <div class="editCustomerForm">
+        <form action="#" method="post" th:action="@{/save_customer}" th:object="${customer}">
+            <div aria-hidden="true" aria-labelledby="editCustomerLabel" class="modal fade"
+                 id="editCustomerModal" role="dialog"
+                 tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editCustomerModalLabel">Update or
+                                Create</h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal"
+                                    type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label" for="id">ID:</label>
+                                <input class="form-control" id="id" name="id" type="text" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="name">Name:</label>
+                                <input class="form-control" id="name" th:field="*{name}"  name="name" type="text" value=""/>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-form-label" for="email">E-mail:</label>
+                                <input class="form-control" id="email" th:field="*{email}"  name="email" type="text" value=""/>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-form-label" for="phone">Phone:</label>
+                               <input class="form-control" id="phone" th:field="*{phone}"  name="phone" type="text" value=""/>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-form-label" for="address">Address:</label>
+                                <input class="form-control" id="address" th:field="*{address}"  name="address" type="text" value=""/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal"
+                                    type="button">Close
+                            </button>
+                            <input class="btn btn-primary" type="submit" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    
+    
+
+
+
+
+<th:block th:include="layout :: script"></th:block>

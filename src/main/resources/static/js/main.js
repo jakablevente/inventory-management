@@ -38,4 +38,19 @@
 			});
 			$('.editProductForm #editProductModal').modal();
 		});
+		
+			$('.editCustomer').on('click',function(event){
+			event.preventDefault();
+			
+			href=$(this).attr('href');
+			
+			$.get(href,function(customer, status){
+				$('.editCustomerForm #id').val(customer.id);
+				$('.editCustomerForm #name').val(customer.name);
+				$('.editCustomerForm #email').val(customer.email);
+				$('.editCustomerForm #phone').val(customer.phone);
+				$('.editCustomerForm #address').val(customer.address);
+			});
+			$('.editCustomerForm #editCustomerModal').modal();
+		});
 	 });
