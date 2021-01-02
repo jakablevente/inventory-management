@@ -1,12 +1,11 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" class="container-fluid">
 
-      <div class="container-fluid">
 	<h1>Category Manager</h1>
 	
-	<div sec:authorize="hasAnyAuthority('ADMIN')">
+	<div sec:authorize="hasAnyAuthority('ADMIN')" class="ml-3 mb-5 mt-3">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Add category
 </button>
@@ -45,13 +44,8 @@
 
 
 
-
-
-
-
-	
-	<br/><br/>
-	<table border="1" cellpadding="10">
+<div class="container">
+	<table class="table table-striped  "  cellpadding="10">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -68,14 +62,16 @@
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
 				
-					<a th:href="@{/findOne/(id=${category.id})}" class="btn btn-warning eBtn">Edit</a>			
+          <a th:href="@{/findOne/(id=${category.id})}" class="btn text-info eBtn">
+            <i class="material-icons">create</i></a></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_category/' + ${category.id}}">Delete</a>
+          <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_category/' + ${category.id}}">
+            <i class="material-icons text-danger">delete</i></a>
 				</td>
 			</tr>
 		</tbody>
-	</table>
-      </div>
+  </table>
+</div>
 
       
     </div>

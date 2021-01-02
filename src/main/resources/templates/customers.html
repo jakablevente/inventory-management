@@ -31,9 +31,11 @@
 				<td th:text="${customer.address}">Address</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{/findCustomer/(id=${customer.id})}" class="btn btn-warning editCustomer">Edit</a>			
+          <a th:href="@{/findCustomer/(id=${customer.id})}" class="btn text-info editCustomer">
+            <i class="material-icons">create</i></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_customer/' + ${customer.id}}">Delete</a>
+          <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_customer/' + ${customer.id}}">
+            <i class="material-icons text-danger">delete</i></a>
 				</td>
 			</tr>
 		</tbody>

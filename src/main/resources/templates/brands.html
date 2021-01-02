@@ -1,17 +1,18 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" class="container-fluid">
 
-<h1>Brand Manager</h1>
+    <h1 class="ml-2">Brand Manager</h1>
 	
-<div sec:authorize="hasAnyAuthority('ADMIN')">
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-5 ml-3 mt-3">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Add Brand
+  Add brand
 </button>
+</div>
 	
-	<br/><br/>
-	<table border="1" cellpadding="10">
+<div class="container">
+	<table class="table table-striped " cellpadding="10">
 		<thead>
 			<tr>
 				<th>Brand ID</th>
@@ -27,15 +28,18 @@
 				<td th:text="${brand.name}">Name</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-				<a th:href="@{/findBrand/(id=${brand.id})}" class="btn btn-warning eBrand">Edit</a>		
+        <a th:href="@{/findBrand/(id=${brand.id})}" class="text-info btn eBrand">
+        <i class="material-icons">create</i></a>		
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_brand/' + ${brand.id}}">Delete</a>
+          <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_brand/' + ${brand.id}}">
+            <i class="material-icons text-danger">delete</i></a>
 				</td>
 				
 			</tr>
 		</tbody>
 	</table>
-</div>
+
+  </div>
     </div>
     
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

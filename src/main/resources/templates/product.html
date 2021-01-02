@@ -1,15 +1,18 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" class="container-fluid">
 
-<div sec:authorize="hasAnyAuthority('ADMIN')">
+
+	<h1>Product Management</h1>
+
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="ml-3 mb-5 mt-3">
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
   Add product
 	</button>
 	</div>
 <div class="container">
-	<table cellpadding="10" class="table table-hover table-bordered">
+	<table cellpadding="10" class="table table-striped ">
 		<thead>
 			<tr>
 				<th>Product ID</th>
@@ -33,9 +36,11 @@
 				<td th:text="${product.price}">Price</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{/findProduct/(id=${product.id})}" class="btn btn-warning editProd">Edit</a>			
+					<a th:href="@{/findProduct/(id=${product.id})}" class="btn text-info editProd">
+						<i class="material-icons">create</i></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">
+						<i class="material-icons text-danger">delete</i></a>
 				</td>
 			</tr>
 		</tbody>

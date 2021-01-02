@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
+
 @Entity
 @Table(name="orders")
 public class Orders {
@@ -26,6 +28,7 @@ public class Orders {
 	    private int id;
 	    
 		@Column(name = "date_time")
+		@CreatedDate
 	    private Date dateTime;
 		
 	    private double total;
@@ -37,7 +40,8 @@ public class Orders {
 	    private Customers customer;
 	    
 
-	    @OneToMany(mappedBy="order",cascade=CascadeType.ALL)
+		@OneToMany(mappedBy="order",cascade=CascadeType.ALL,
+		orphanRemoval = true)
 	    private List<OrderItem> orderItems = new ArrayList<>();
 
 
@@ -57,7 +61,7 @@ public class Orders {
 
 
 		public void setDateTime(Date dateTime) {
-			this.dateTime = new Date();
+			this.dateTime = dateTime;
 		}
 
 
@@ -98,6 +102,11 @@ public class Orders {
 
 		public void setOrderItems(List<OrderItem> orderItems) {
 			this.orderItems = orderItems;
+		}
+
+		public void addOrderItem( OrderItem orderItem){
+			orderItems.add(orderItem);
+			orderItems.setOrder(this);
 		}
 
 

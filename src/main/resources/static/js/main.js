@@ -53,4 +53,5 @@
 			});
 			$('.editCustomerForm #editCustomerModal').modal();
 		});
+
 	 });

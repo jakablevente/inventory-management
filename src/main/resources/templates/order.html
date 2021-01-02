@@ -1,15 +1,17 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" class="container-fluid">
 
-<div sec:authorize="hasAnyAuthority('ADMIN')">
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+	<h1>Order Management</h1>
+
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-5 ml-3 mt-3">
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOrderModal">
   Add Order
 	</button>
 	</div>
 <div class="container">
-	<table cellpadding="10" class="table table-hover table-bordered">
+	<table cellpadding="10" class="table table-striped table-bordered">
 		<thead>
 			<tr>
 				<th>Order ID</th>
@@ -32,9 +34,11 @@
 				<td th:text="${order.customer.name}">Customer</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{/findOrder/(id=${order.id})}" class="btn btn-warning editOrder">Edit</a>			
+					<a th:href="@{/findOrder/(id=${order.id})}" class="btn text-success editOrder">
+						<i class="material-icons">create</i></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${order.id}}">Delete</a>
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${order.id}}">
+						<i class="material-icons text-danger">delete</i></a>
 				</td>
 			</tr>
 		</tbody>
@@ -71,12 +75,12 @@
 				</tr>			
 				<tr>
 					<td>Product:</td>
-					<td><select th:field="*{product}" class="form-control" >
+					 <td><select name="orderItems[0].product.id" class="form-control" >
 						<th:block th:each="product : ${listProducts}">
 							<option th:text="${product.name}" th:value="${product.id}"/>
 						</th:block>
 					</select>
-					</td>
+					</td> -->
 				</tr>					
 				<tr>
 					<td>Price:</td>
