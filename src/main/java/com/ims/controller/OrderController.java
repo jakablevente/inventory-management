@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ims.model.Customers;
@@ -49,8 +50,12 @@ public class OrderController {
 	
 	
 	@RequestMapping(value="/save_order", method = RequestMethod.POST)
-	public String saveOrder(@ModelAttribute ("order") Orders order) {
-		orderService.save(order);
+	public String saveOrder(@RequestParam("customerId") Integer customerId,
+							@RequestParam("productId") Integer productId,
+							@RequestParam("qty") Integer qty){
+		
+		
+		orderService.order(customerId, productId, qty);
 		
 		return "redirect:/orders";
 	}

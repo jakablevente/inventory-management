@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ims.model.Category;
 import com.ims.service.CategoryService;
@@ -47,9 +48,16 @@ public class CategoryController {
 	
 	
 	@RequestMapping("/delete_category/{id}")
-	public String deleteCategory(@PathVariable(name = "id") int id) {
+	public String deleteCategory(@PathVariable(name = "id") int id, RedirectAttributes redirAttrs) {
+		try {
 		categoryService.delete(id);
 		return "redirect:/category";
+		} catch (Exception e) {
+			String errorMsg = "Can't delete this field!";
+			redirAttrs.addFlashAttribute("errorMsg",errorMsg);
+			return "redirect:/category";
+		}
+		
 	}
 	
 	@RequestMapping("/findOne")

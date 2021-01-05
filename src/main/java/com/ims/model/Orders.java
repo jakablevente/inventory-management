@@ -21,8 +21,13 @@ import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name="orders")
-public class Orders {
+public class Orders implements java.io.Serializable{
 		
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2297381202194678732L;
+
 		@Id
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	    private int id;
@@ -44,6 +49,20 @@ public class Orders {
 		orphanRemoval = true)
 	    private List<OrderItem> orderItems = new ArrayList<>();
 
+		
+		public static Orders createOrder(Customers customer, OrderItem... orderItems) {
+			Orders order = new Orders();
+			order.setCustomer(customer);
+			order.setPaidStatus(1);
+			order.setDateTime(new Date());
+			
+			for(OrderItem orderItem : orderItems) {
+				order.addOrderItem(orderItem);
+			}
+				
+			
+			return order;
+		}
 
 		public int getId() {
 			return id;
@@ -106,8 +125,53 @@ public class Orders {
 
 		public void addOrderItem( OrderItem orderItem){
 			orderItems.add(orderItem);
-			orderItems.setOrder(this);
+			orderItem.setOrder(this);
 		}
+		
+		public void removeOrderItem(OrderItem orderItem) {
+			
+			orderItem.setOrder(null);
+			this.orderItems.remove(orderItem);
+		}
+		
+		public double getTotalPrice() {
+			double totalPrice = 0;
+			
+			for(OrderItem orderItem : orderItems) {
+				totalPrice += orderItem.getTotalPrice();
+			}
+			
+			return totalPrice;
+		}
+
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
+			return result;
+		}
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Orders other = (Orders) obj;
+			if (orderItems == null) {
+				if (other.orderItems != null)
+					return false;
+			} else if (!orderItems.equals(other.orderItems))
+				return false;
+			return true;
+		}
+		
+		
 
 
 

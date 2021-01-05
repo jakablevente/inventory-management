@@ -11,9 +11,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem implements java.io.Serializable{
 
-	 @Id
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = -471515790110981708L;
+
+	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private int id;
 	    
@@ -31,13 +36,19 @@ public class OrderItem {
 	    
 	    public OrderItem() {}
 	    
-	    public OrderItem(int id, Orders order, Product product, int qty, double amount) {
-	        super();
-	        this.id = id;
-	        this.order = order;
-	        this.product = product;
-	        this.qty = qty;
-	        this.amount = amount;
+	    public static OrderItem createOrderItem(Product product,  double amount,int qty) {
+	    	OrderItem orderItem = new OrderItem();
+	    	orderItem.setProduct(product);
+	    	orderItem.setQty(qty);
+	    	orderItem.setAmount(amount);
+	    	
+	    	
+	    	
+	    	return orderItem;
+	    }
+	    
+	    public double getTotalPrice() {
+	    	return getAmount() * getQty();
 	    }
 	    
 	public int getId() {
@@ -70,6 +81,8 @@ public class OrderItem {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
+	
 	
 	
 }
