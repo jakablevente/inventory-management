@@ -13,11 +13,12 @@
 
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+  width: 20rem;
+  font-size:1.1rem;
 }
 
 #page-content-wrapper {
@@ -45,4 +46,8 @@
 
 .bg-dark{
 	color:white !important;
+}
+
+.alert{
+	width:40%;
 }

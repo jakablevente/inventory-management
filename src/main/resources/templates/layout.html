@@ -43,11 +43,21 @@
 	</form>
 	
 </div>
+
+     
 </th:block>
+
+<th:block th:fragment="alerts">
+	         <div class="alert alert-danger" role="alert" th:text="${errorMsg}" th:if="${errorMsg}"></div>
+            <div class="alert alert-success col-sm4" role="alert" th:text="${success}" th:if="${success}"></div>
+            
+</th:block>
+
 
 
 <!-- jQuery library -->
 <th:block th:fragment="script">
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

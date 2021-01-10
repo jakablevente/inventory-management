@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ims.model.Category;
+import com.ims.repository.CategoryRepository;
 import com.ims.service.CategoryService;
 
 @Controller
@@ -20,6 +21,7 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
+
 	
 	@RequestMapping("/category")
 	public String viewCategoryPage(Model model) {
@@ -30,6 +32,7 @@ public class CategoryController {
 		Category category = new Category();
 		model.addAttribute("category", category);
 		
+		
 		return "category";
 	}
 	
@@ -38,9 +41,10 @@ public class CategoryController {
 	
 	
 	@RequestMapping(value="/addcategory",method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute ("category") Category category) {
+	public String addCategory(@ModelAttribute ("category") Category category,RedirectAttributes redirAttrs) {
 		
 		categoryService.save(category);
+		redirAttrs.addFlashAttribute("success","New category created successfuly!");
 		
 		return "redirect:/category";
 	}
@@ -51,11 +55,13 @@ public class CategoryController {
 	public String deleteCategory(@PathVariable(name = "id") int id, RedirectAttributes redirAttrs) {
 		try {
 		categoryService.delete(id);
+		redirAttrs.addFlashAttribute("success","Deleted succesfully!");
 		return "redirect:/category";
 		} catch (Exception e) {
 			String errorMsg = "Can't delete this field!";
 			redirAttrs.addFlashAttribute("errorMsg",errorMsg);
 			return "redirect:/category";
+
 		}
 		
 	}

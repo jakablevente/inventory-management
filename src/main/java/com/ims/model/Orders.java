@@ -170,18 +170,6 @@ public class Orders implements java.io.Serializable{
 				return false;
 			return true;
 		}
-		
-		
-
-
-
-    
-
-
-
-	
-	
-	
-	
+			
 
 }

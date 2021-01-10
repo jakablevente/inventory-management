@@ -64,34 +64,40 @@
       <div class="modal-body">
       
 			<table border="0" cellpadding="10">
-				<tr>
-					<td>Customer</td>
-					<td><select name="customerId" th:field="*{customer}" class="form-control" >
+					<tr>Customer</tr>
+					<tr><select name="customerId" th:field="*{customer}" class="form-control" >
 						<th:block th:each="customer : ${listCustomers}">
 							<option th:text="${customer.name}" th:value="${customer.id}"/>
 						</th:block>
 					</select>
-					</td>
-				</tr>			
+					</tr>
+											
+					<tr>
+					<td>Total:<input type="text" th:field="*{total}" /></td>
+				</tr>
+				<td>Product:</td>	
 				<tr>
-					<td>Product:</td>
-					 <td><select name ="productId"  class="form-control" >
+					 <td><select th:name ="order.orderItems[0].product.id"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
 							<option th:text="${product.name}" th:value="${product.id}"/>
 						</th:block>
 					</select>
-					</td> -->
-				</tr>					
-				<tr>
-					<td>Price:</td>
-					<td><input type="text" th:field="*{paidStatus}" /></td>
-				</tr>	
-					<tr>
-					<td>Qty:
-					<input type="number" name="count" class="form-control">
 					</td>
-					<td><input type="text" th:field="*{total}" /></td>
+					<td>Qty:
+					<input type="number" name="orderItems[0].quantity" />
+					</td>
 				</tr>			
+				<tr>
+					 <td><select th:name ="order.orderItems[1].product.id"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name}" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>Qty:
+					<input type="number" name="orderItems[1].quantity" />
+					</td>
+				</tr>					
 			</table>
 			
 		

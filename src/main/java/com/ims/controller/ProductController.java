@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ims.model.Brands;
 import com.ims.model.Category;
@@ -50,17 +51,25 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("product") Product product) {
+	public String saveProduct(@ModelAttribute("product") Product product,
+							  RedirectAttributes redirAttrs) {
+		
 		productService.save(product);
+		redirAttrs.addFlashAttribute("success","New Product created successfully!");
 		
 		return "redirect:/product";
 	}
 	
 	
 	@RequestMapping("/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") int id) {
+	public String deleteProduct(@PathVariable(name = "id") int id, RedirectAttributes redirAttrs) {
+		try {
 		productService.delete(id);
-		return "redirect:/product";		
+		redirAttrs.addFlashAttribute("success","Deleted successfully!");
+		} catch (Exception e) {
+			redirAttrs.addFlashAttribute("errorMsg","Can't delete this product!");
+		}
+		return "redirect:/product";
 	}
 	
 	@RequestMapping("/findProduct")

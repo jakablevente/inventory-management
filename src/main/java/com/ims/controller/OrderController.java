@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,14 +44,14 @@ public class OrderController {
 		model.addAttribute("listOrder", listOrder);
 		model.addAttribute("listProducts", listProducts);
 		model.addAttribute("order", order);
+
 		
 		return "order";
 				
 	}
 	
-	
-	@RequestMapping(value="/save_order", method = RequestMethod.POST)
-	public String saveOrder(@RequestParam("customerId") Integer customerId,
+	@PostMapping("/save_order")
+	public String addOrder(@RequestParam("customerId") Integer customerId,
 							@RequestParam("productId") Integer productId,
 							@RequestParam("qty") Integer qty){
 		

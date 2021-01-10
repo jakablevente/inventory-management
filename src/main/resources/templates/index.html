@@ -4,10 +4,71 @@
 <div id="page-content-wrapper">
 
 
-      <div class="container-fluid">
-        <h1 class="mt-4">Dashboard</h1>
-        
-        
-      </div>
-    </div>
+      <div class="row mb-3 ml-2 mr-2" >
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="material-icons">list_alt</i>
+                            </div>
+                            <h6 class="text-uppercase">Orders</h6>
+                            <h1 class="display-4" th:text="${#lists.size(listOrders)}"></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="material-icons">inventory_2</i>
+                            </div>
+                            <h6 class="text-uppercase">Products</h6>
+                            <h1 class="display-4"th:text="${#lists.size(listProduct)}" ></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                               <i class="material-icons">account_box</i>
+                            </div>
+                            <h6 class="text-uppercase">Customers</h6>
+                            <h1 class="display-4" th:text="${#lists.size(listCustomers)}"></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="material-icons">category</i>
+                            </div>
+                            <h6 class="text-uppercase">Brands</h6>
+                            <h1 class="display-4" th:text="${#lists.size(listBrands)}"></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+    <!-- End Main content -->
+    <style>
+    	.card {
+    overflow:hidden;
+}
+
+.card .material-icons{
+font-size:100px;
+color: rgba(20, 20, 20, 0.15);
+ position: absolute;
+    left: auto;
+    right: 5px;
+    bottom: 0;
+    display: block;
+
+}
+    </style>
+
+
+</div>
 <th:block th:include="layout :: script"></th:block>

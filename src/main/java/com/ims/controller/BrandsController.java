@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ims.model.Brands;
 import com.ims.service.BrandsService;
@@ -37,17 +38,25 @@ public class BrandsController {
 	
 	
 	@RequestMapping(value="/save_brand", method = RequestMethod.POST)
-	public String saveBrand(@ModelAttribute ("brand") Brands brand) {
+	public String saveBrand(@ModelAttribute ("brand") Brands brand, RedirectAttributes redirAttrs) {
 		brandService.save(brand);
+		redirAttrs.addFlashAttribute("success","New Brand created successfully!");
 		return "redirect:/brands";
 		
 	}
 	
 	
 	@RequestMapping("/delete_brand/{id}")
-	public String deleteBrand(@PathVariable(name = "id") int id) {
+	public String deleteBrand(@PathVariable(name = "id") int id,RedirectAttributes redirAttrs) {
+		try {
 		brandService.delete(id);
+		redirAttrs.addFlashAttribute("success","Deleted successfully!");
 		return "redirect:/brands";
+		} catch (Exception e) {
+			redirAttrs.addFlashAttribute("errorMsg","Can't delete this brand!");
+			return "redirect:/brands";
+		}
+		
 	}
 	
 	@RequestMapping("/findBrand")
