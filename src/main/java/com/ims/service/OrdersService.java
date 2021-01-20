@@ -21,23 +21,6 @@ public class OrdersService {
 	@Autowired
 	private OrderRepository orderRepo;
 	
-	private CustomersRepository custRepo;
-	private ProductRepository prodRepo;
-	
-	@Transactional
-	public Integer order(int customerId, int productId, int qty) {
-		
-		Customers customer = custRepo.findById(customerId).get();
-		Product product = prodRepo.findById(productId).get();
-		
-		OrderItem orderItem = OrderItem.createOrderItem(product,product.getPrice(), qty);
-		
-		Orders order = Orders.createOrder(customer, orderItem);
-		
-		orderRepo.save(order);
-		
-		return order.getId();
-	}
 	
 
 	
@@ -47,6 +30,11 @@ public class OrdersService {
 	}
 	
 	public void save (Orders order) {
+		
+		/*for(OrderItem items : order.getOrderItems()) {
+			
+			items.setOrder(order);
+		} */
 		
 		orderRepo.save(order);
 	}
@@ -60,5 +48,7 @@ public class OrdersService {
 		
 		orderRepo.deleteById(id);
 	}
+	
+
 
 }

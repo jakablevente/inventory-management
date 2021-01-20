@@ -36,15 +36,14 @@ public class OrderItem implements java.io.Serializable{
 	    
 	    public OrderItem() {}
 	    
-	    public static OrderItem createOrderItem(Product product,  double amount,int qty) {
-	    	OrderItem orderItem = new OrderItem();
-	    	orderItem.setProduct(product);
-	    	orderItem.setQty(qty);
-	    	orderItem.setAmount(amount);
+	    public OrderItem(Integer id, Orders order, Product product, int qty, double amount) {
 	    	
-	    	
-	    	
-	    	return orderItem;
+	    	super();
+	    	this.id = id;
+	    	this.order = order;
+	    	this.product = product;
+	    	this.qty = qty;
+	    	this.amount = amount;
 	    }
 	    
 	    public double getTotalPrice() {
@@ -78,9 +77,60 @@ public class OrderItem implements java.io.Serializable{
 	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setAmount(int qty, double price ){
+		this.amount = qty * price;
 	}
+	
+	public void setAmount(double price) {
+		this.amount = price;
+	}
+	
+	
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(amount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + id;
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + qty;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderItem other = (OrderItem) obj;
+		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
+			return false;
+		if (id != other.id)
+			return false;
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		if (qty != other.qty)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	

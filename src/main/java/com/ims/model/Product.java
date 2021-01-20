@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ims.exception.NotEnoughStockException;
+
 
 @Entity
 @Table(name="product")
@@ -45,6 +47,19 @@ public class Product  {
 		this.qty = qty;
 		this.category = category;
 		this.brands = brands;
+	}
+	
+	public void addStock(int qty) {
+		this.qty += qty;
+	}
+	
+	public void removeStock(int qty) {
+		int restStock = this.qty -= qty;
+		
+		if(restStock < 0) {
+			throw new NotEnoughStockException("need more stock");
+		}
+		this.qty = restStock;
 	}
 
 	public int getId() {
@@ -103,6 +118,15 @@ public class Product  {
 	public void addQty(int qty) {
 		this.qty += qty;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", qty=" + qty + ", category=" + category
+				+ ", brands=" + brands + "]";
+	}
+	
+	
+	
 	
 	
 

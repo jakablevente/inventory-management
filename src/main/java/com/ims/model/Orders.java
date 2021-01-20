@@ -50,18 +50,26 @@ public class Orders implements java.io.Serializable{
 	    private List<OrderItem> orderItems = new ArrayList<>();
 
 		
-		public static Orders createOrder(Customers customer, OrderItem... orderItems) {
-			Orders order = new Orders();
-			order.setCustomer(customer);
-			order.setPaidStatus(1);
-			order.setDateTime(new Date());
+		
+		public void addOrderItem( OrderItem orderItem){
+			orderItems.add(orderItem);
+			orderItem.setOrder(this);
+		}
+		
+		public void removeOrderItem(OrderItem orderItem) {
+			this.orderItems.remove(orderItem);
+			orderItem.setOrder(null);
+			
+		}
+		
+		public double getTotalPrice() {
+			double totalPrice = 0;
 			
 			for(OrderItem orderItem : orderItems) {
-				order.addOrderItem(orderItem);
+				totalPrice += orderItem.getTotalPrice();
 			}
-				
 			
-			return order;
+			return totalPrice;
 		}
 
 		public int getId() {
@@ -122,27 +130,7 @@ public class Orders implements java.io.Serializable{
 		public void setOrderItems(List<OrderItem> orderItems) {
 			this.orderItems = orderItems;
 		}
-
-		public void addOrderItem( OrderItem orderItem){
-			orderItems.add(orderItem);
-			orderItem.setOrder(this);
-		}
 		
-		public void removeOrderItem(OrderItem orderItem) {
-			
-			orderItem.setOrder(null);
-			this.orderItems.remove(orderItem);
-		}
-		
-		public double getTotalPrice() {
-			double totalPrice = 0;
-			
-			for(OrderItem orderItem : orderItems) {
-				totalPrice += orderItem.getTotalPrice();
-			}
-			
-			return totalPrice;
-		}
 
 
 		@Override

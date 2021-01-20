@@ -45,8 +45,10 @@ public class Brands {
 
 	@Override
 	public String toString() {
-		return name;
+		return "Brands [id=" + id + ", name=" + name + "]";
 	}
+
+
 	
 	
 	

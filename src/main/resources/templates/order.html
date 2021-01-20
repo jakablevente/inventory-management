@@ -19,7 +19,6 @@
 				<th>Total</th>
 				<th>Paid Status</th>
 				<th>Customer</th>
-				<th>Price</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -76,26 +75,29 @@
 					<td>Total:<input type="text" th:field="*{total}" /></td>
 				</tr>
 				<td>Product:</td>	
-				<tr>
-					 <td><select th:name ="order.orderItems[0].product.id"  class="form-control" >
+				<<tr>
+					 <td><select th:name ="orderItems[0].product.id"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
 							<option th:text="${product.name}" th:value="${product.id}"/>
 						</th:block>
 					</select>
 					</td>
 					<td>Qty:
-					<input type="number" name="orderItems[0].quantity" />
+					<input type="number" name="orderItems[0].qty" />
 					</td>
 				</tr>			
 				<tr>
-					 <td><select th:name ="order.orderItems[1].product.id"  class="form-control" >
+					 <td><select th:name ="orderItems[1].product.id"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
 							<option th:text="${product.name}" th:value="${product.id}"/>
 						</th:block>
 					</select>
 					</td> 
 					<td>Qty:
-					<input type="number" name="orderItems[1].quantity" />
+					<input type="number" name="orderItems[1].qty" />
+					</td>
+					<td>
+						<input type="number" step="any" name="${orderItems[1].amount}" />
 					</td>
 				</tr>					
 			</table>

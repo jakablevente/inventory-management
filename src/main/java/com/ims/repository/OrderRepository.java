@@ -7,4 +7,5 @@ import com.ims.model.Orders;
 
 public interface OrderRepository  extends JpaRepository<Orders, Integer>{
 
+
 }

@@ -16,12 +16,22 @@
 	<table cellpadding="10" class="table table-striped ">
 		<thead>
 			<tr>
-				<th>Product ID</th>
-				<th>Name</th>
-				<th>Brand</th>
+			<th>
+    			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
+    			${reverseSortDir}}">Product ID</a>
+			</th>
+			<th>
+    			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=name&sortDir=' + 
+    			${reverseSortDir}}">Name</a>
+			</th>
+				<th>
+    			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=brands&sortDir=' + 
+    			${reverseSortDir}}">Brand</a>
+			</th>
 				<th>Category</th>
 				<th>Quantity</th>
 				<th>Price</th>
+				<th>BarCode</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -35,6 +45,9 @@
 				<td th:text="${product.category.categoryName}">Category</td>
 				<td th:text="${product.qty}">Quantity</td>
 				<td th:text="${product.price}">Price</td>
+				<td>
+					<img th:src="@{${'/barcode/' + product.id}}" width="90" height="40">
+				</td>
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
 					<a th:href="@{/findProduct/(id=${product.id})}" class="btn text-info editProd">
@@ -46,8 +59,22 @@
 			</tr>
 		</tbody>
 	</table>
+	 <a th:if="${currentPage > 1}" th:href="@{'/product?sortField= + ${sortField} + '&sortDir=' + ${sortDir}'}">First</a>
+	<span th:unless="${currentPage > 1}">First</span>
+	<a th:if="${currentPage > 1}" th:href="@{'/product/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+	<span th:unless="${currentPage > 1}">Previous</span>
+	<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/product/page/' + ${i} + '?sortField=' + ${sortField}' + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+	</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/product/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+	<span th:unless="${currentPage < totalPages}">Next</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/product/page/' + ${totalPages}}">Last</a>
+	<span th:unless="${currentPage < totalPages}">Last</span>
 	</div>
     </div>
+   
     
     <!-- /#page-content-wrapper -->
     
@@ -92,7 +119,7 @@
 				</tr>				
 				<tr>
 					<td>Price:</td>
-					<td><input type="text" th:field="*{price}" /></td>
+					<td><input type="text" th:field="*{price}" name=price /></td>
 				</tr>	
 					<tr>
 					<td>Qty:</td>
@@ -134,7 +161,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label" for="name">Name:</label>
-                                <input class="form-control" id="name" th:field="*{name}"  name="name" type="text" value=""/>
+                                <input class="form-control" id="name" th:field="*{name}" name="name"   type="text" value=""/>
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="brand">Brand:</label>
@@ -154,11 +181,11 @@
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="price">Price:</label>
-                                <input class="form-control" id="price" th:field="*{price}"  name="price" type="text" value=""/>
+                                <input class="form-control" id="price" th:field="*{price}" name="price"  type="text" value=""/>
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="qty">Qty:</label>
-                                <input class="form-control" id="qty" th:field="*{qty}"  name="qty" type="text" value=""/>
+                                <input class="form-control" id="qty" th:field="*{qty}" name="qty"   type="text" value=""/>
                             </div>
                         </div>
                         <div class="modal-footer">

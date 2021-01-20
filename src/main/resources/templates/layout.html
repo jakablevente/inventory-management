@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" th:href="@{/style.css}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <title>Product Manager</title>
 </head>
@@ -22,12 +22,12 @@
 	<div class="sidebar-heading">Inventory Management</div>
 	<div class="list-group list-group-flush">
 		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Dashboard</a>
-		<a href="product" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
-		<a href="order" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
-		<a href="brands" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
-		<a href="customers" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Customers</a>
-		<a href="category" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
+		<a th:href="@{/product}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
+		<a th:href="@{/order}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
+		<a th:href="@{/brands}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
+		<a th:href="@{/category}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
+		<a th:href="@{/customers}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Customers</a>
+		<a th:href="@{/company}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
 	</div>
 	
 	<div class="list-group-item list-group-item-action bg-dark" sec:authorize="isAuthenticated()">
@@ -66,7 +66,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>
 </th:block>

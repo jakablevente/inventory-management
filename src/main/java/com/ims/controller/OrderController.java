@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ims.model.Customers;
+import com.ims.model.OrderItem;
 import com.ims.model.Orders;
 import com.ims.model.Product;
 import com.ims.service.CustomersService;
@@ -51,14 +52,17 @@ public class OrderController {
 	}
 	
 	@PostMapping("/save_order")
-	public String addOrder(@RequestParam("customerId") Integer customerId,
-							@RequestParam("productId") Integer productId,
-							@RequestParam("qty") Integer qty){
+	public String saveOrder(@ModelAttribute("order") Orders order){
 		
+		for(OrderItem items : order.getOrderItems()) {
+			items.setOrder(order);
+			items.setAmount(items.getQty(),items.getProduct().getPrice());
+			
+		}
 		
-		orderService.order(customerId, productId, qty);
+		orderService.save(order);
 		
-		return "redirect:/orders";
+		return "redirect:/order";
 	}
 	
 	@RequestMapping(value="/delete_order/{id}")
