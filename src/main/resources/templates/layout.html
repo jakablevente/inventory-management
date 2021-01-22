@@ -21,13 +21,21 @@
 <div class="bg-dark border-right" id="sidebar-wrapper">
 	<div class="sidebar-heading">Inventory Management</div>
 	<div class="list-group list-group-flush">
-		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Dashboard</a>
-		<a th:href="@{/product}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Product</a>
-		<a th:href="@{/order}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Orders</a>
-		<a th:href="@{/brands}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Brands</a>
-		<a th:href="@{/category}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Categories</a>
-		<a th:href="@{/customers}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Customers</a>
-		<a th:href="@{/company}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">Company</a>
+		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')"><i class="material-icons mr-2">dashboard</i>Dashboard</a>
+		<a th:href="@{/product}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+			<i class="material-icons mr-2">inventory_2</i>Product</a>
+		<a th:href="@{/order}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+			<i class="material-icons mr-2">shopping_cart</i>Orders</a>
+		<a th:href="@{/brands}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<i class="material-icons mr-2">style</i>Brands</a>
+		<a th:href="@{/category}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<i class="material-icons mr-2">category</i>Categories</a>
+		<a th:href="@{/customers}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<i class="material-icons mr-2">transfer_within_a_station</i>Customers</a>
+		<a th:href="@{/company}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<i class="material-icons mr-2">description</i>Company</a>
+		<a th:href="@{/users}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+			<i class="material-icons mr-2">groups</i>Users</a>
 	</div>
 	
 	<div class="list-group-item list-group-item-action bg-dark" sec:authorize="isAuthenticated()">

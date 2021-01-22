@@ -3,6 +3,8 @@ package com.ims.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.ims.model.Customers;
 import com.ims.service.CustomersService;
@@ -24,13 +27,7 @@ public class CustomersController {
 	@RequestMapping("/customers")
 	public String viewCustomerPage(Model model) {
 		
-		List<Customers> listCustomers = customerService.listAll();
-		model.addAttribute("listCustomers", listCustomers);
-		
-		Customers customer = new Customers();
-		model.addAttribute("customer", customer);
-		
-		return "customers";
+		return viewPage(model,1,"name","asc");
 		
 	}
 	
@@ -61,5 +58,34 @@ public class CustomersController {
 	public Customers findCustomer(int id) {
 		
 		return customerService.get(id);
+	}
+	
+	@RequestMapping("/customers/page/{pageNum}")
+	public String viewPage(Model model,
+	        @PathVariable(name = "pageNum") int pageNum,
+	        @Param("sortField") String sortField,
+	        @Param("sortDir") String sortDir) {
+	     
+	    Page<Customers> page = customerService.listAll(pageNum, sortField, sortDir);
+	     
+	    List<Customers> listCustomers = page.getContent();
+
+		Customers customer= new Customers();
+	     
+	    model.addAttribute("currentPage", pageNum);
+	    model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    
+		model.addAttribute("listCustomers", listCustomers);
+		
+		model.addAttribute("customer", customer);
+	    
+
+	     
+	    return "customers";
 	}
 }

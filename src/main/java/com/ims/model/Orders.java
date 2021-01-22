@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -86,16 +87,15 @@ public class Orders implements java.io.Serializable{
 			return dateTime;
 		}
 
-
-		public void setDateTime(Date dateTime) {
-			this.dateTime = dateTime;
+		@PrePersist
+		public void setDateTime() {
+			this.dateTime = new Date();
 		}
 
 
 		public double getTotal() {
 			return total;
 		}
-
 
 		public void setTotal(double total) {
 			this.total = total;

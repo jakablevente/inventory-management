@@ -3,6 +3,10 @@ package com.ims.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ims.model.Brands;
@@ -17,6 +21,16 @@ public class BrandsService {
 	public List<Brands> listAll(){
 		
 		return brandRepo.findAll();
+	}
+	
+	public Page<Brands> listAll(int pageNum, String sortField, String sortDir){
+		int pageSize = 5;
+		
+		Pageable pageable = PageRequest.of(pageNum -1, pageSize,
+				sortDir.equals("asc") ? Sort.by(sortField).ascending()
+										: Sort.by(sortField).descending());
+		
+		return brandRepo.findAll(pageable);
 	}
 	
 	public void save (Brands brand) {

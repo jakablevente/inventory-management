@@ -11,14 +11,29 @@
 	
 	<th:block th:include="layout :: alerts"></th:block>
 <div class="container">
-	<table cellpadding="10" class="table table-hover table-bordered">
+	<table cellpadding="10" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Customer ID</th>
-				<th>Name</th>
-				<th>E-mail</th>
-				<th>Phone</th>
-				<th>Address</th>
+				<th>
+    				<a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
+    			${reverseSortDir}}">Customer ID</a>
+				</th>
+				<th>
+    				<a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=name&sortDir=' + 
+    			${reverseSortDir}}">Name</a>
+				</th>
+				<th>
+    				<a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=email&sortDir=' + 
+    			${reverseSortDir}}">E-mail</a>
+				</th>
+				<th>
+    				<a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=phone&sortDir=' + 
+    			${reverseSortDir}}">Phone</a>
+				</th>
+				<th>
+    				<a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=address&sortDir=' + 
+    			${reverseSortDir}}">Address</a>
+				</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -42,6 +57,22 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<div class="container  badge " style="font-size:15px;">
+	 <a th:if="${currentPage > 1}" th:href="@{'/customers' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"> First</a>
+	<span  th:unless="${currentPage > 1}">First</span>
+	<a th:if="${currentPage > 1}" th:href="@{'/customers/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+	<span th:unless="${currentPage > 1}">Previous</span>
+	<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+	</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/customers/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+	<span th:unless="${currentPage < totalPages}">Next</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/customers/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+	<span th:unless="${currentPage < totalPages}">Last</span>
+	</div>
 	</div>
     </div>
     

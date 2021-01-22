@@ -3,6 +3,8 @@ package com.ims.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ims.model.Category;
-import com.ims.repository.CategoryRepository;
 import com.ims.service.CategoryService;
 
 @Controller
@@ -26,19 +27,10 @@ public class CategoryController {
 	@RequestMapping("/category")
 	public String viewCategoryPage(Model model) {
 		
-		List<Category> listCategory = categoryService.listAll();
-		model.addAttribute("listCategory", listCategory);
 		
-		Category category = new Category();
-		model.addAttribute("category", category);
-		
-		
-		return "category";
+		return viewPage(model, 1, "categoryName", "asc");
 	}
-	
-	
-
-	
+		
 	
 	@RequestMapping(value="/addcategory",method = RequestMethod.POST)
 	public String addCategory(@ModelAttribute ("category") Category category,RedirectAttributes redirAttrs) {
@@ -70,6 +62,31 @@ public class CategoryController {
 	@ResponseBody
 	public Category findOne(Integer id){
 		return categoryService.get(id);
+	}
+	
+	@RequestMapping("/category/page/{pageNum}")
+	public String viewPage(Model model,
+			@PathVariable(name = "pageNum") int pageNum,
+			@Param("sortField") String sortField,
+			@Param("sortDir") String sortDir) {
+		
+		Page<Category> page = categoryService.listAll(pageNum, sortField, sortDir);
+		
+		List<Category> listCategory = page.getContent();
+		Category category = new Category();
+		
+	    model.addAttribute("currentPage", pageNum);
+	    model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+		
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("category", category);
+		
+		return "category";
 	}
 
 	

@@ -1,0 +1,117 @@
+<th:block th:include="layout :: top"></th:block>
+<style>
+
+.main-head{
+    height: 150px;
+    background: #FFF;
+   
+}
+
+.sidenav {
+    height: 100%;
+
+    overflow-x: hidden;
+    padding-top: 20px;
+    background-image:url('https://images.pexels.com/photos/4277794/pexels-photo-4277794.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+
+.main {
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%; 
+    }
+
+    .sidenav{
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form{
+        margin-top: 80%;
+    }
+
+    .register-form{
+        margin-top: 20%;
+    }
+}
+
+
+.login-main-text{
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2{
+    font-weight: 300;
+}
+
+.btn-black{
+    background-color: #000 !important;
+    color: #fff;
+}
+
+</style>
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>Inventory Management System<br> Login Page</h2>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+		<form th:action="@{/login}" method="post" class="mr-2 ml-2">
+			<h1>Sign In</h1>
+			
+		
+		    <div class="input-group">
+		   		<div class="input-group">
+		        	<span class="input-group-text">
+		        		<i class="material-icons">account_circle</i>
+		        	</span>
+		        	<input type="text" class="form-control" placeholder="username" name="username" required />  
+		    	</div>
+		    </div>
+		    
+		   		
+		    <div class="input-group">
+		   		<div class="input-group my-3">
+		        	<span class="input-group-text">
+		        		<i class="material-icons">lock</i>
+		        	</span>
+		        	 <input type="password" class="form-control" placeholder="password" name="password" required />
+		    	</div>
+		    </div>
+		   
+		    
+		    <button type="submit" class="btn btn-black">Sign in</button>
+		</form>
+		</div>
+	</div>
+</div>
+<th:block th:include="layout :: script"></th:block>
+
+ 

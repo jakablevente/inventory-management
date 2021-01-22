@@ -53,5 +53,20 @@
 			});
 			$('.editCustomerForm #editCustomerModal').modal();
 		});
+		
+		$('.editUser').on('click',function(event){
+			event.preventDefault();
+			
+			href=$(this).attr('href');
+			
+			$.get(href,function(user, status){
+				$('.editUserForm #id').val(user.id);
+				$('.editUserForm #username').val(user.username);
+				$('.editUserForm #password').val(user.password);
+				$('.editUserForm #roles').val(user.roles);
+				$('.editUserForm  #enabled').val(user.enabled);
+			});
+			$('.editUserForm #editUserModal').modal();
+		});
 
 	 });

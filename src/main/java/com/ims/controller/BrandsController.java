@@ -3,6 +3,8 @@ package com.ims.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,16 +26,9 @@ public class BrandsController {
 	
 	@RequestMapping("/brands")
 	public String viewBrandPage(Model model) {
+	
 		
-		List<Brands> listBrands = brandService.listAll();
-		model.addAttribute("listBrands", listBrands);
-		
-		Brands brand = new Brands();
-		model.addAttribute("brand", brand);
-		
-		
-		
-		return "brands";
+		return viewPage(model, 1, "name" , "asc");
 	}
 	
 	
@@ -63,6 +58,34 @@ public class BrandsController {
 	@ResponseBody
 	public Brands findOne(Integer id){
 		return brandService.get(id);
+	}
+	
+	@RequestMapping("/brands/page/{pageNum}")
+	public String viewPage(Model model,
+	        @PathVariable(name = "pageNum") int pageNum,
+	        @Param("sortField") String sortField,
+	        @Param("sortDir") String sortDir) {
+	     
+	    Page<Brands> page = brandService.listAll(pageNum, sortField, sortDir);
+	     
+	    List<Brands> listBrands = page.getContent();
+		Brands brand = new Brands();
+	     
+	    model.addAttribute("currentPage", pageNum);
+	    model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    
+		model.addAttribute("listBrands", listBrands);
+		model.addAttribute("brand", brand);
+	    
+
+
+	     
+	    return "brands";
 	}
 	
 

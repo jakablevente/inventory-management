@@ -1,0 +1,190 @@
+<th:block th:include="layout :: top"></th:block>
+<th:block th:include="layout :: menu"></th:block>
+
+<div id="page-content-wrapper">
+
+<h1>Felhasználók kezelése</h1>
+
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+  Új felhasználó
+	</button>
+	</div>
+
+<div class="container">
+	<table cellpadding="10" class="table table-striped">
+		<thead>
+			<tr>
+				<th>
+    				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
+    			${reverseSortDir}}">Felhasználó ID</a>
+				</th>
+				<th>
+    				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=username&sortDir=' + 
+    			${reverseSortDir}}">Felhasználónév</a>
+				</th>
+				<th>
+    				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + 
+    			${reverseSortDir}}">Aktív</a>
+				</th>
+				<th>
+    				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=role&sortDir=' + 
+    			${reverseSortDir}}">Jogok</a>
+				</th>
+				<th>
+
+				
+				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user : ${listUsers}">
+				<td th:text="${user.id}">User ID</td>
+				<td th:text="${user.username}">UserName</td>
+				<td th:text="${user.enabled}">Enabled</td>
+				<td th:text="${user.roles}">Roles</td>
+				
+			<td sec:authorize="hasAnyAuthority('ADMIN')">
+          <a th:href="@{/findUser/(id=${user.id})}" class="btn text-info editUser">
+            <i class="material-icons">create</i></a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+          <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_user/' + ${user.id}}">
+            <i class="material-icons text-danger">delete</i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="container  badge " style="font-size:15px;">
+	 <a th:if="${currentPage > 1}" th:href="@{'/users' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"> First</a>
+	<span  th:unless="${currentPage > 1}">First</span>
+	<a th:if="${currentPage > 1}" th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+	<span th:unless="${currentPage > 1}">Previous</span>
+	<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+	</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+	<span th:unless="${currentPage < totalPages}">Next</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+	<span th:unless="${currentPage < totalPages}">Last</span>
+	</div> 
+	</div>
+    </div>
+    
+    <!-- /#page-content-wrapper -->
+    
+    	 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="#" th:action="@{/save_user}" th:object="${user}" method="post">
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Felhasználó ID:</td>
+					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
+				</tr>			
+				<tr>
+					<td> Felhasználónév:</td>
+					<td><input type="text" th:field="*{username}" /></td>
+				</tr>
+				<tr>
+					<td>Jelszó:</td>
+					<td><input type="password" th:field="*{password}"/></td>
+				</tr>		
+				<tr>
+				<td>Jogok:</td>
+				<td>
+					<th:block th:each="role : ${listRoles}">
+							<input type="checkbox" th:field="*{roles}" th:text="${role.name}"
+							th:value="${role.id}"/>
+					</th:block>
+			   </td>
+			   </tr>
+			   <tr>
+					<td>Aktív:</td>
+					<td><input type="checkbox" name="enabled" th:checked="${user.enabled}" /></td>
+				</tr>				
+			</table>
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Modal -->
+      <div class="editUserForm">
+        <form action="#" method="post" th:action="@{/save_user}" th:object="${user}">
+            <div aria-hidden="true" aria-labelledby="editUserLabel" class="modal fade"
+                 id="editUserModal" role="dialog"
+                 tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editUserModalLabel">Update or
+                                Create</h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal"
+                                    type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label" for="id">ID:</label>
+                                <input class="form-control" id="id" name="id" type="text" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="username">Name:</label>
+                                <input class="form-control" id="username" th:field="*{username}"  name="username" type="text" value=""/>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-form-label" for="password">Password:</label>
+                                <input class="form-control" id="password" th:field="*{password}"  name="password" type="password" value=""/>
+                            </div> 
+                              <div class="form-group">
+                            	<label class="col-form-label" for="roles">Roles:</label>
+                            	<th:block th:each="role : ${listRoles}">
+								<input class="form-control" type="checkbox"id="roles" name="roles" th:field="*{roles}" th:text="${role.name}"
+								th:value="${role.id}"/>
+							</th:block>
+                            </div>   
+                            <div class="form-group">
+                            <label class="col-form-label" for="enabled">Enabled:</label>
+                            	<select class="form-control"  th:field="*{enabled}" id="enabled">
+									<option th:value="1">true</option>
+									<option th:value="0">false</option>
+                            	</select>
+                            </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal"
+                                    type="button">Close
+                            </button>
+                            <input class="btn btn-primary" type="submit" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    
+
+
+<th:block th:include="layout :: script"></th:block>

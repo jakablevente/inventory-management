@@ -3,9 +3,14 @@ package com.ims.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ims.model.Customers;
+import com.ims.model.Product;
 import com.ims.repository.CustomersRepository;
 
 @Service
@@ -18,6 +23,16 @@ public class CustomersService {
 		
 		return customerRepo.findAll();
 				
+	}
+	
+	public Page<Customers> listAll(int pageNum, String sortField, String sortDir){
+		int pageSize = 8;
+		
+		Pageable pageable = PageRequest.of(pageNum -1, pageSize,
+				sortDir.equals("asc") ? Sort.by(sortField).ascending()
+										: Sort.by(sortField).descending());
+		
+		return customerRepo.findAll(pageable);
 	}
 	
 	public void save(Customers customer) {

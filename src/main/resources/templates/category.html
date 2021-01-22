@@ -50,8 +50,14 @@
 	<table class="table table-striped  "  cellpadding="10">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>Category</th>
+				<th>
+    			<a th:href="@{'/category/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
+    			${reverseSortDir}}">Category ID</a>
+			</th>
+				<th>
+    			<a th:href="@{'/category/page/' + ${currentPage} + '?sortField=categoryName&sortDir=' + 
+    			${reverseSortDir}}">Name</a>
+			</th>
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -71,10 +77,25 @@
             <i class="material-icons text-danger">delete</i></a>
 				</td>
 				
-    </div>
+   			 </div>
 			</tr>
 		</tbody>
   </table>
+  <div class="container  badge " style="font-size:15px;">
+	 <a th:if="${currentPage > 1}" th:href="@{'/category' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"> First</a>
+	<span  th:unless="${currentPage > 1}">First</span>
+	<a th:if="${currentPage > 1}" th:href="@{'/category/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+	<span th:unless="${currentPage > 1}">Previous</span>
+	<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/category/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+	</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/category/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+	<span th:unless="${currentPage < totalPages}">Next</span>
+	<a th:if="${currentPage < totalPages}" th:href="@{'/category/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+	<span th:unless="${currentPage < totalPages}">Last</span>
+	</div>
 </div>
       
     </div>

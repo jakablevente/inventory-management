@@ -14,7 +14,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
  
     private String username;
     private String password;
@@ -27,8 +27,22 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
             )
     private Set<Role> roles = new HashSet<>();
+    
+    
+    public User() {}
+	
+	public User(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
  
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -55,6 +69,10 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public boolean getEnabled() {
+		return enabled;
+	}
 
 	public Set<Role> getRoles() {
 		return roles;
@@ -64,8 +82,21 @@ public class User {
 		this.roles = roles;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public void addRole(Role role) {
+		roles.add(role);
+	}
+	
+	public void removeRole(Role role) {
+		roles.remove(role);
+	}
+	
+	@Override
+	public String toString() {
+		return username;
 	}
     
     
