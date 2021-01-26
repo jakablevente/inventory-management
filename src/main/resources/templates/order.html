@@ -20,7 +20,7 @@
 				<th>Total</th>
 				<th>Paid Status</th>
 				<th>Customer</th>
-				
+				<th>OrderDetails</th>
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
 			</tr>
@@ -29,9 +29,18 @@
 			<tr th:each="order : ${listOrder}">
 				<td th:text="${order.id}">Order ID</td>
 				<td th:text="${order.dateTime}">Date</td>
-				<td th:text="${order.total}">Total</td>
+				<td th:text="${order.total} + ' Ft'">Total</td>
 				<td th:text="${order.paidStatus}">PaidStatus</td>
 				<td th:text="${order.customer.name}">Customer</td>
+				<td>
+		            <p th:each="orderItem : ${order.orderItems}">
+		            	<span th:text="${orderItem.product.brands.name}">CatName</span>
+		                <span th:text="${orderItem.product.name}">Street</span>
+		                <span th:text="${orderItem.qty} + 'db'">City</span>
+		                <span th:text="${orderItem.amount} + 'Ft'">ZIP</span>
+		            </p>
+		        </td>
+
 				
 				<td sec:authorize="hasAnyAuthority('ADMIN')">
 					<a th:href="@{/findOrder/(id=${order.id})}" class="btn text-success editOrder">
@@ -40,8 +49,10 @@
 					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${order.id}}">
 						<i class="material-icons text-danger">delete</i></a>
 						
-					<a href="details.html" th:href="@{/order/details(id=${order.id})}" class="btn text-success orderDetails">
-						<i class="material-icons">create</i></a>		
+						<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<button th:href="@{/findOrder/(id=${order.id})}" data-toggle="modal" type="button"class="btn text-success" data-target="#detailsModal")>
+						<i class="material-icons">create</i></button>		
+						
 				</td>
 			</tr>
 		</tbody>
@@ -131,6 +142,48 @@
     </div>
   </div>
 </div>
+
+
+
+
+ <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsOModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+			<table border="0" cellpadding="10" id="myTable">
+				<tbody>	
+				<tr th:each="order : ${listOrder}">
+					<td>
+		            <p th:each="orderItem : ${order.orderItems}">
+		                <span th:text="${orderItem.product.name}">Street</span>
+		                <span th:text="${orderItem.qty}">City</span>
+		                <span th:text="${orderItem.amount}">ZIP</span>
+		            </p>
+		        </td>
+				</tr>			
+				</tbody>		
+			
+			</table>
+
+
+
+			
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

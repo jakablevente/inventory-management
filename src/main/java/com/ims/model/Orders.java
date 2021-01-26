@@ -173,6 +173,20 @@ public class Orders implements java.io.Serializable{
 				return false;
 			return true;
 		}
+
+
+
+		@Override
+		public String toString() {
+			return "Orders id=" + id + ", dateTime=" + dateTime + ", total=" + total + ", paidStatus=" + paidStatus
+					+ ", customer=" + customer + ", orderItems=" + orderItems;
+		}
+
+
+
+	
+		
+		
 			
 
 }

@@ -129,6 +129,15 @@ public class OrderItem implements java.io.Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Item:" + product.getName() + ", qty:" + qty + ", amount:" + amount + " Ft";
+	}
+
+	
+	
+	
 	
 	
 	

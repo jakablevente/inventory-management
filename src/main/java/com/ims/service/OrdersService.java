@@ -37,15 +37,18 @@ public class OrdersService {
 			items.setOrder(order);
 		} */
 		List<OrderItem> orderedItems = new ArrayList<>();
+		double total = 0.0;
 		
 		for(OrderItem oItems : order.getOrderItems()) {
 			
 			oItems.setOrder(order);
 			oItems.setAmount(oItems.getProduct().getPrice() * oItems.getQty());
 			oItems.getProduct().removeStock(oItems.getQty());
+			total += oItems.getAmount();
 			orderedItems.add(oItems);
 			
 		}
+		order.setTotal(total);
 		order.setOrderItems(orderedItems);
 		
 		orderRepo.save(order);
