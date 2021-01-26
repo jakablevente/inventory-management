@@ -5,15 +5,16 @@
 
 <h1>Felhasználók kezelése</h1>
 
-<div sec:authorize="hasAnyAuthority('ADMIN')">
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
-  Új felhasználó
-	</button>
-	</div>
+
 
 <div class="container">
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
+	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addUserModal">
+  Új felhasználó<i class="material-icons">add</i>
+	</button>
+	</div>
 	<table cellpadding="10" class="table table-striped">
-		<thead>
+		<thead >
 			<tr>
 				<th>
     				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
@@ -31,7 +32,6 @@
     				<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=role&sortDir=' + 
     			${reverseSortDir}}">Jogok</a>
 				</th>
-				<th>
 
 				
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
@@ -160,7 +160,7 @@
                               <div class="form-group">
                             	<label class="col-form-label" for="roles">Roles:</label>
                             	<th:block th:each="role : ${listRoles}">
-								<input class="form-control" type="checkbox"id="roles" name="roles" th:field="*{roles}" th:text="${role.name}"
+								<input  type="checkbox"id="roles" name="roles" th:field="*{roles}" th:text="${role.name}"
 								th:value="${role.id}"/>
 							</th:block>
                             </div>   
@@ -170,6 +170,7 @@
 									<option th:value="1">true</option>
 									<option th:value="0">false</option>
                             	</select>
+                     
                             </div>                        
                         </div>
                         <div class="modal-footer">

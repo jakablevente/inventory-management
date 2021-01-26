@@ -48,5 +48,19 @@ public class HomeController {
 		model.addAttribute("listOrders", listOrders);
 		return "index";
 	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		
+		return "login";
+	}
+	
+	@RequestMapping("/login-error")
+	public String loginError(Model model) {
+		
+		model.addAttribute("loginError",true);
+		return "login";
+		}
+	
 
 }

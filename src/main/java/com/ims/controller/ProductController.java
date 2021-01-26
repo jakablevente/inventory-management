@@ -1,6 +1,10 @@
 package com.ims.controller;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ims.helpers.ProductPDFExporter;
 import com.ims.helpers.ZXingHelper;
 import com.ims.model.Brands;
 import com.ims.model.Category;
@@ -24,6 +30,7 @@ import com.ims.model.Product;
 import com.ims.service.BrandsService;
 import com.ims.service.CategoryService;
 import com.ims.service.ProductService;
+import com.itextpdf.text.DocumentException;
 
 @Controller
 public class ProductController {
@@ -111,6 +118,24 @@ public class ProductController {
 	     
 	    return "product";
 	}
+	
+	
+	  @GetMapping("/product/export/pdf")
+	    public void exportToPDF(HttpServletResponse response) throws  DocumentException, IOException{
+	        response.setContentType("application/pdf");
+	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	        String currentDateTime = dateFormatter.format(new Date());
+	         
+	        String headerKey = "Content-Disposition";
+	        String headerValue = "attachment; filename=product_" + currentDateTime + ".pdf";
+	        response.setHeader(headerKey, headerValue);
+	         
+	        List<Product> listProducts = productService.listAll();
+	         
+	        ProductPDFExporter exporter = new ProductPDFExporter(listProducts);
+	        exporter.export(response);
+	         
+	    }
 	
 	
 

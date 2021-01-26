@@ -35,6 +35,8 @@
 				$('.editProductForm #name').val(product.name);
 				$('.editProductForm #price').val(product.price);
 				$('.editProductForm #qty').val(product.qty);
+				$('.editProductForm #catSelect').val(product.category.id)
+				$('.editProductForm #brandSelect').val(product.brands.id)
 			});
 			$('.editProductForm #editProductModal').modal();
 		});
@@ -63,10 +65,84 @@
 				$('.editUserForm #id').val(user.id);
 				$('.editUserForm #username').val(user.username);
 				$('.editUserForm #password').val(user.password);
-				$('.editUserForm #roles').val(user.roles);
-				$('.editUserForm  #enabled').val(user.enabled);
+				$('.editUserForm #roles').val(user.roles.getRoles().id);
+				$('.editUserForm #enabled1 ').prop('checked', true);
+
 			});
 			$('.editUserForm #editUserModal').modal();
 		});
+		
+		   $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+
+
+	$('#productSubmit').click(function(){
+		var isFormValid = true;
+
+	$("#addProductModal input").each(function(){
+    if ($.trim($(this).val()).length == 0 ||($(this).val()) < 1 ){
+        $(this).addClass("is-invalid");
+        isFormValid = false;
+        $(this).focus();
+    }
+    else{
+        $(this).removeClass("is-invalid");
+     }
+    });
+return isFormValid;
+	});
+	
+		$('#categorySubmit').click(function(){
+		var isFormValid = true;
+
+	$("#addCategoryModal input").each(function(){
+    if ($.trim($(this).val()).length == 0 ||($(this).val()) < 1 ){
+        $(this).addClass("is-invalid");
+        isFormValid = false;
+        $(this).focus();
+    }
+    else{
+        $(this).removeClass("is-invalid");
+     }
+    });
+return isFormValid;
+	});
+	
+	$('#brandSubmit').click(function(){
+		var isFormValid = true;
+
+	$("#addBrandModal input").each(function(){
+    if ($.trim($(this).val()).length == 0 ||($(this).val()) < 1 ){
+        $(this).addClass("is-invalid");
+        isFormValid = false;
+        $(this).focus();
+    }
+    else{
+        $(this).removeClass("is-invalid");
+     }
+    });
+return isFormValid;
+	});
+	
+	$('#customerSubmit').click(function(){
+		var isFormValid = true;
+
+	$("#addCustomerModal input").each(function(){
+    if ($.trim($(this).val()).length == 0 ||($(this).val()) < 1 ){
+        $(this).addClass("is-invalid");
+        isFormValid = false;
+        $(this).focus();
+    }
+    else{
+        $(this).removeClass("is-invalid");
+     }
+    });
+return isFormValid;
+	});
+	
+
 
 	 });

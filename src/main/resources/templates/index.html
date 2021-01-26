@@ -6,8 +6,8 @@
 
       <div class="row mb-3 ml-2 mr-2" >
                 <div class="col-xl-3 col-sm-6 py-2">
-                    <div class="card bg-success text-white h-100">
-                        <div class="card-body bg-success">
+                    <div class="card  border-dark text-dark h-100">
+                        <div class="card-body bg-light">
                             <div class="rotate">
                                 <i class="material-icons">list_alt</i>
                             </div>
@@ -17,8 +17,8 @@
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 py-2">
-                    <div class="card text-white bg-danger h-100">
-                        <div class="card-body bg-danger">
+                    <div class="card  border-dark text-dark h-100">
+                        <div class="card-body bg-light">
                             <div class="rotate">
                                 <i class="material-icons">inventory_2</i>
                             </div>
@@ -28,8 +28,8 @@
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 py-2">
-                    <div class="card text-white bg-info h-100">
-                        <div class="card-body bg-info">
+                    <div class="card  border-dark text-dark h-100">
+                        <div class="card-body bg-light" >
                             <div class="rotate">
                                <i class="material-icons">account_box</i>
                             </div>
@@ -39,8 +39,8 @@
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 py-2">
-                    <div class="card text-white bg-warning h-100">
-                        <div class="card-body">
+                    <div class="card  border-dark text-dark 100">
+                        <div class="card-body bg-light" >
                             <div class="rotate">
                                 <i class="material-icons">category</i>
                             </div>
@@ -50,6 +50,116 @@
                     </div>
                 </div>
             </div>
+       <div class="row mb-3 ml-2 mr-2 py-4">
+       
+          <div class="col-xl-3 col-sm-6 py-2 ">
+        <div class="card">
+        <div class="card-header">New Orders</div>
+            <table cellpadding="10" class="card-table table  ">
+		<thead class="">
+			<tr>
+			<th>
+    			OrderID
+			</th>
+			<th>
+    			Name
+			</th>	
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="order, iterStat : ${listOrders}" th:if="${iterStat.index >= iterStat.size-5}">
+				<td th:text="${order.id}">OrderID</td>
+				<td th:text="${order.customer.name}">Name</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</div>
+        <div class="col-xl-3 col-sm-6 py-2 ">
+        <div class="card">
+        <div class="card-header">New Products</div>
+            <table cellpadding="10" class="card-table table  ">
+		<thead >
+			<tr>
+			<th>
+    			Product ID
+			</th>
+			<th>
+    			Name
+			</th>
+			<th>
+    			Brand
+			</th>
+				<th>
+    			Category
+			</th>			
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product, iterStat : ${listProduct}" th:if="${iterStat.index >= iterStat.size-5}">
+				<td th:text="${product.id}">Product ID</td>
+				<td th:text="${product.name}">Name</td>
+				<td th:text="${product.brands.name}">Brand</td>
+				<td th:text="${product.category.categoryName}">Category</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</div>
+	
+	   <div class="col-xl-3 col-sm-6 py-2 ">
+        <div class="card">
+        <div class="card-header">New Customers</div>
+            <table cellpadding="10" class="card-table table  ">
+		<thead class="">
+			<tr>
+			<th>
+    			CustomerID
+			</th>
+			<th>
+    			Name
+			</th>	
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="customer, iterStat : ${listCustomers}" th:if="${iterStat.index >= iterStat.size-5}">
+				<td th:text="${customer.id}">CustomerID</td>
+				<td th:text="${customer.name}">Name</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</div>
+	
+	   <div class="col-xl-3 col-sm-6 py-2 ">
+        <div class="card">
+        <div class="card-header">New Brands</div>
+            <table cellpadding="10" class="card-table table  ">
+            		
+		<thead>
+			<tr>
+			<th>
+    			BrandID
+			</th>
+			<th >
+    			Name
+			</th>	
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="brand, iterStat : ${listBrands}" th:if="${iterStat.index >= iterStat.size-5}">
+				<td th:text="${brand.id}">BrandID</td>
+				<td th:text="${brand.name}">Name</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</div>
+	</div>     
             <!--/row-->
     <!-- End Main content -->
     <style>
@@ -59,14 +169,15 @@
 
 .card .material-icons{
 font-size:100px;
-color: rgba(20, 20, 20, 0.15);
+color: #2E8B57;
  position: absolute;
     left: auto;
     right: 5px;
     bottom: 0;
     display: block;
-
 }
+
+
     </style>
 
 

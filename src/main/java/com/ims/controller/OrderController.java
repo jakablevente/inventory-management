@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,8 @@ import com.ims.service.ProductService;
 
 @Controller
 public class OrderController {
+    private static final String AJAX_HEADER_NAME = "X-Requested-With";
+    private static final String AJAX_HEADER_VALUE = "XMLHttpRequest";
 	
 	@Autowired
 	private OrdersService orderService;
@@ -54,11 +57,6 @@ public class OrderController {
 	@PostMapping("/save_order")
 	public String saveOrder(@ModelAttribute("order") Orders order){
 		
-		for(OrderItem items : order.getOrderItems()) {
-			items.setOrder(order);
-			items.setAmount(items.getQty(),items.getProduct().getPrice());
-			
-		}
 		
 		orderService.save(order);
 		
@@ -77,4 +75,9 @@ public class OrderController {
 	public Orders findOrder(Integer id) {
 		return orderService.get(id);
 	}
+	
+
+
+	
+
 }

@@ -1,9 +1,10 @@
 <th:block th:include="layout :: top"></th:block>
 <style>
 
+
 .main-head{
     height: 150px;
-    background: #FFF;
+    background-color:white;
    
 }
 
@@ -20,6 +21,7 @@
 
 .main {
     padding: 0px 10px;
+    
 }
 
 @media screen and (max-height: 450px) {
@@ -60,7 +62,7 @@
 
 
 .login-main-text{
-    margin-top: 20%;
+    margin-top: 40%;
     padding: 60px;
     color: #fff;
 }
@@ -77,22 +79,24 @@
 </style>
 <div class="sidenav">
          <div class="login-main-text">
-            <h2>Inventory Management System<br> Login Page</h2>
+            <h1 class="font-weight-bold">Inventory Management System</h1>
          </div>
-      </div>
+</div>
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
 		<form th:action="@{/login}" method="post" class="mr-2 ml-2">
 			<h1>Sign In</h1>
-			
-		
+		<div class="alert alert-danger" role="alert" th:if="${loginError}">
+		 Wrong username or password
+		 </div>
 		    <div class="input-group">
 		   		<div class="input-group">
 		        	<span class="input-group-text">
 		        		<i class="material-icons">account_circle</i>
 		        	</span>
-		        	<input type="text" class="form-control" placeholder="username" name="username" required />  
+		        	<input type="text" class="form-control" placeholder="username" name="username"
+		        	 required autofocus="autofocus" />  
 		    	</div>
 		    </div>
 		    

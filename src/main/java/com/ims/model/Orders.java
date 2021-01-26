@@ -49,9 +49,24 @@ public class Orders implements java.io.Serializable{
 		@OneToMany(mappedBy="order",cascade=CascadeType.ALL,
 		orphanRemoval = true)
 	    private List<OrderItem> orderItems = new ArrayList<>();
+		
+		public Orders() {
+			
+		}
 
 		
 		
+		public Orders(int id, Date dateTime, double total, int paidStatus, Customers customer,
+				List<OrderItem> orderItems) {
+			super();
+			this.id = id;
+			this.dateTime = dateTime;
+			this.total = total;
+			this.paidStatus = paidStatus;
+			this.customer = customer;
+			this.orderItems = orderItems;
+		}
+
 		public void addOrderItem( OrderItem orderItem){
 			orderItems.add(orderItem);
 			orderItem.setOrder(this);

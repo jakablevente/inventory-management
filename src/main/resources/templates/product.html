@@ -1,44 +1,47 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper" class="container-fluid">
+
+<h1 class="mt-4 ml-4">Product Manager</h1>
 
 
-	<h1>Product Management</h1>
-
-<div sec:authorize="hasAnyAuthority('ADMIN')" class="ml-3 mb-5 mt-3">
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
-  Add product
-	</button>
-	</div>
 	<th:block th:include="layout :: alerts"></th:block>
 <div class="container">
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
+	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addProductModal">
+  Add product <i class="material-icons">add</i>
+	</button>
+		
+<a th:href="@{/product/export/pdf}" class="btn btn-outline-dark">Export to PDF
+	<i class="material-icons">print</i>
+</a>
+	</div>
 	<table cellpadding="10" class="table table-striped ">
-		<thead>
+		<thead >
 			<tr>
 			<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
-    			${reverseSortDir}}">Product ID</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Product ID</a>
 			</th>
 			<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=name&sortDir=' + 
-    			${reverseSortDir}}">Name</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Name</a>
 			</th>
 			<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=brands&sortDir=' + 
-    			${reverseSortDir}}">Brand</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Brand</a>
 			</th>
 				<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=category&sortDir=' + 
-    			${reverseSortDir}}">Category</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Category</a>
 			</th>
 			<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=qty&sortDir=' + 
-    			${reverseSortDir}}">Quantity</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Quantity</a>
 			</th>
 			<th>
     			<a th:href="@{'/product/page/' + ${currentPage} + '?sortField=price&sortDir=' + 
-    			${reverseSortDir}}">Price</a>
+    			${reverseSortDir}}"><i class="material-icons">swap_vert</i>Price</a>
 			</th>
 				<th>BarCode</th>
 				
@@ -53,7 +56,7 @@
 				<td th:text="${product.brands.name}">Brand</td>
 				<td th:text="${product.category.categoryName}">Category</td>
 				<td th:text="${product.qty}">Quantity</td>
-				<td th:text="${product.price}">Price</td>
+				<td th:text="${product.price} + ' Ft'">Price</td>
 				<td>
 					<img th:src="@{${'/barcode/' + product.id}}" width="90" height="40">
 				</td>
@@ -102,13 +105,10 @@
       <div class="modal-body">
       
 			<table border="0" cellpadding="10">
-				<tr>
-					<td>Product ID:</td>
-					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
-				</tr>			
+		
 				<tr>
 					<td>Product Name:</td>
-					<td><input type="text" th:field="*{name}" /></td>
+					<td><input type="text" class="form-control" th:field="*{name}" id="prodName"/></td>
 				</tr>
 				<tr>
 					<td>Brand:</td>
@@ -130,11 +130,11 @@
 				</tr>				
 				<tr>
 					<td>Price:</td>
-					<td><input type="text" th:field="*{price}" name=price /></td>
+					<td><input type="text"  class="form-control"th:field="*{price}" name=price id="price" /></td>
 				</tr>	
 					<tr>
 					<td>Qty:</td>
-					<td><input type="text" th:field="*{qty}" /></td>
+					<td><input type="text" class="form-control" th:field="*{qty}" id="qty" /></td>
 				</tr>			
 			</table>
 			
@@ -142,7 +142,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" id="productSubmit" class="btn btn-outline-dark">Save</button>
       </div>
       </form>
     </div>
@@ -176,7 +176,7 @@
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="brand">Brand:</label>
-                                <select th:field="*{brands}" >
+                                <select th:field="*{brands}" id="brandSelect" >
 									<th:block th:each="brands : ${listBrands}">
 										<option th:text="${brands.name}" th:value="${brands.id}" name="brand" id="brand"/>
 									</th:block>
@@ -184,7 +184,7 @@
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="id">Category:</label>
-                                <select th:field="*{category}" >
+                                <select th:name="*{category}" id="catSelect">
 									<th:block th:each="category : ${listCategories}">
 										<option th:text="${category.categoryName}" th:value="${category.id}" name="category" id="category"/>
 									</th:block>

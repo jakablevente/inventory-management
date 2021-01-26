@@ -1,5 +1,6 @@
 package com.ims.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,17 @@ public class OrdersService {
 			
 			items.setOrder(order);
 		} */
+		List<OrderItem> orderedItems = new ArrayList<>();
+		
+		for(OrderItem oItems : order.getOrderItems()) {
+			
+			oItems.setOrder(order);
+			oItems.setAmount(oItems.getProduct().getPrice() * oItems.getQty());
+			oItems.getProduct().removeStock(oItems.getQty());
+			orderedItems.add(oItems);
+			
+		}
+		order.setOrderItems(orderedItems);
 		
 		orderRepo.save(order);
 	}
