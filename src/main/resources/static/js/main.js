@@ -66,7 +66,6 @@
 				$('.editUserForm #username').val(user.username);
 				$('.editUserForm #password').val(user.password);
 				$('.editUserForm #roles').val(user.roles.getRoles().id);
-				$('.editUserForm #enabled1 ').prop('checked', true);
 
 			});
 			$('.editUserForm #editUserModal').modal();

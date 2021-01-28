@@ -23,17 +23,17 @@
 	<div class="list-group list-group-flush">
 		<a href="/" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
 			<i class="material-icons mr-2">dashboard</i>Dashboard</a>
-		<a th:href="@{/product}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/product}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 			<i class="material-icons mr-2">inventory_2</i>Product</a>
-		<a th:href="@{/order}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/order}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 			<i class="material-icons mr-2">shopping_cart</i>Orders</a>
-		<a th:href="@{/brands}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/brands}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 		<i class="material-icons mr-2">style</i>Brands</a>
-		<a th:href="@{/category}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/category}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 		<i class="material-icons mr-2">category</i>Categories</a>
-		<a th:href="@{/customers}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/customers}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 		<i class="material-icons mr-2">transfer_within_a_station</i>Customers</a>
-		<a th:href="@{/company}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
+		<a th:href="@{/company}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN','USER')">
 		<i class="material-icons mr-2">description</i>Company</a>
 		<a th:href="@{/users}" class="list-group-item list-group-item-action bg-dark" sec:authorize="hasAnyAuthority('ADMIN')">
 			<i class="material-icons mr-2">groups</i>Users</a>

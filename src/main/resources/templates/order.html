@@ -87,9 +87,8 @@
 					</tr>
 											
 					<tr>
-					<td>Total:<input type="text" th:field="*{total}" /></td>
+					<td>Total:<input type="text" value="0" th:field="*{total}" /></td>
 				</tr>
-				       <button type="submit" name="addRow">Add row</button>
 				<tbody>
 				<td>Product:</td>	
 				<tr>
@@ -100,7 +99,7 @@
 					</select>
 					</td>
 					<td>Qty:
-					<input type="number" name="orderItems[0].qty" />
+					<input type="number" value="0"  name="orderItems[0].qty" />
 					</td>
 				</tr>			
 				<tr>
@@ -111,7 +110,7 @@
 					</select>
 					</td> 
 					<td>Qty:
-					<input type="number" name="orderItems[1].qty" />
+					<input type="number" value="0" name="orderItems[1].qty" />
 					</td>
 				</tr>
 				<tr>
@@ -122,9 +121,36 @@
 					</select>
 					</td> 
 					<td>Qty:
-					<input type="number" name="orderItems[2].qty" />
+					<input type="number" value="0" name="orderItems[2].qty" />
 					</td>
-				</tr>									
+				</tr>	
+				<tr>
+					 <td><select th:name ="orderItems[3].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name}" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>Qty:
+					<input type="number" value="0" name="orderItems[3].qty" />
+					</td>
+				</tr>	
+				<tr>
+					 <td><select th:name ="orderItems[4].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name}" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>Qty:
+					<input type="number" value="0" name="orderItems[4].qty" />
+					</td>
+				</tr>	
+				
+
+
+
+					
 				</tbody>		
 			
 			</table>

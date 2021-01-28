@@ -39,7 +39,7 @@ public class Orders implements java.io.Serializable{
 		
 	    private double total;
 	    @Column(name = "paid_status")
-	    private int paidStatus;
+	    private boolean paidStatus;
 	    
 	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name="customer_id")
@@ -56,7 +56,7 @@ public class Orders implements java.io.Serializable{
 
 		
 		
-		public Orders(int id, Date dateTime, double total, int paidStatus, Customers customer,
+		public Orders(int id, Date dateTime, double total, boolean paidStatus, Customers customer,
 				List<OrderItem> orderItems) {
 			super();
 			this.id = id;
@@ -117,12 +117,12 @@ public class Orders implements java.io.Serializable{
 		}
 
 
-		public int getPaidStatus() {
+		public boolean getPaidStatus() {
 			return paidStatus;
 		}
 
 
-		public void setPaidStatus(int paidStatus) {
+		public void setPaidStatus(boolean paidStatus) {
 			this.paidStatus = paidStatus;
 		}
 

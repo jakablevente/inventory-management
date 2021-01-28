@@ -45,9 +45,12 @@ public class OrdersService {
 			oItems.setAmount(oItems.getProduct().getPrice() * oItems.getQty());
 			oItems.getProduct().removeStock(oItems.getQty());
 			total += oItems.getAmount();
+			if(oItems.getQty() != 0) {
 			orderedItems.add(oItems);
+			}
 			
 		}
+		order.setPaidStatus(false);
 		order.setTotal(total);
 		order.setOrderItems(orderedItems);
 		
@@ -60,7 +63,6 @@ public class OrdersService {
 	}
 	
 	public void delete (int id) {
-		
 		orderRepo.deleteById(id);
 	}
 	

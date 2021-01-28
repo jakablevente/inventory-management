@@ -48,7 +48,7 @@ public class BrandsController {
 		redirAttrs.addFlashAttribute("success","Deleted successfully!");
 		return "redirect:/brands";
 		} catch (Exception e) {
-			redirAttrs.addFlashAttribute("errorMsg","Can't delete this brand!");
+			redirAttrs.addFlashAttribute("errorMsg","Can't delete this brand, because it's used!");
 			return "redirect:/brands";
 		}
 		
