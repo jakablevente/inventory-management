@@ -58,8 +58,9 @@ public class Product  {
 		
 		if(restStock < 0) {
 			throw new NotEnoughStockException("need more stock");
-		}
+		}else{
 		this.qty = restStock;
+		}
 	}
 
 	public int getId() {

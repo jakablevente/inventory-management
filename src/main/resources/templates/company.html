@@ -1,0 +1,97 @@
+<th:block th:include="layout :: top"></th:block>
+<th:block th:include="layout :: menu"></th:block>
+
+
+<div sec:authorize="hasAnyAuthority('ADMIN')" class="float-right mt-4 mr-4">
+    <a th:href="@{/findCompany/(id=${1})}" class="btn btn-outline-dark editCompanyButton">
+        Edit Company Information
+    </a>			
+</div>
+    <div class="col-sm-8">
+    <table border="0" cellpadding="10" class="table"th:each="company : ${listCompanies}">
+        <tr>
+            <td><span th:text="${company.id}" style="display:none;"></span></td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Company Name:</td>
+            <td><span  th:text="${company.companyName}" /></td>
+        </tr>		
+        <tr>
+            <td class="font-weight-bold">Address</td>
+            <td><span th:text="${company.address}"></span></td>
+        </tr>	
+        <tr>
+            <td class="font-weight-bold"> Country:</td>
+            <td><span  th:text="${company.country}" /></td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Phone:</td>
+            <td><span  th:text="${company.phone}"/></td>
+        </tr>		
+        <tr>
+        <td class="font-weight-bold">Currency:</td>
+        <td><span th:text="${company.currency}"></span></td>
+        
+       </tr>
+    </table>
+    
+    </div>
+
+ <!-- Modal -->
+ <div class="editCompanyForm">
+    <form action="#" method="post" th:action="@{/save_company}" th:object="${company}">
+        <div aria-hidden="true" aria-labelledby="editCompanyLabel" class="modal fade"
+             id="editCompanyModal" role="dialog"
+             tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCompanyModalLabel">Update or
+                            Create</h5>
+                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-form-label" for="id">ID:</label>
+                            <input class="form-control" id="id"  readonly name="id" type="text" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="name">Company:</label>
+                            <input class="form-control" id="companyName" th:field="*{companyName}" name="companyName"   type="text" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="address">Address:</label>
+                            <input class="form-control" id="address" th:field="*{address}"  name="address" type="text" value=""/>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-form-label" for="phone">Phone:</label>
+                            <input class="form-control" id="phone" th:field="*{phone}"  name="phone" type="text" value=""/>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-form-label" for="country">Country:</label>
+                           <input class="form-control" id="country" th:field="*{country}"  name="country" type="text" value=""/>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-form-label" for="currency">Currency:</label>
+                            <input class="form-control" id="currency" th:field="*{currency}"  name="currency" type="text" value=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal"
+                                type="button">Close
+                        </button>
+                        <input class="btn btn-primary" type="submit" value="save"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+<th:block th:include="layout :: script"></th:block>

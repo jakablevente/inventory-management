@@ -1,18 +1,17 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper">
 
-<h1>Felhasználók kezelése</h1>
-
-
-
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
 	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addUserModal">
-  Új felhasználó<i class="material-icons">add</i>
+  New User<i class="material-icons">add</i>
 	</button>
 	</div>
+<div class="row">
+<h2 class="mr-2">Users Management</h2>
+<th:block th:include="layout :: alerts"></th:block>
+</div>
 	<table cellpadding="10" class="table table-striped">
 		<thead >
 			<tr>
@@ -46,7 +45,7 @@
 				<td th:text="${user.roles}">Roles</td>
 				
 			<td sec:authorize="hasAnyAuthority('ADMIN')">
-          <a th:href="@{/findUser/(id=${user.id})}" class="btn text-info editUser">
+          <a th:href="@{'/users/edit/' + ${user.id}}" class="btn text-info">
             <i class="material-icons">create</i></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
           <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_user/' + ${user.id}}">
@@ -110,6 +109,12 @@
 					</th:block>
 			   </td>
 			   </tr>
+			   <tr>
+				   <td>Enable:</td>
+				   <td>
+					   <input type="checkbox" th:field="*{enabled}" th:value="${user.enabled}">
+				   </td>
+			   </tr>
 			</table>
 			
 		
@@ -155,9 +160,14 @@
                             </div> 
                               <div class="form-group">
                             	<label class="col-form-label" for="roles">Roles:</label>
-                            	<th:block th:each="role : ${listRoles}">
-								<input  type="checkbox"id="roles" name="roles" th:field="*{roles}" th:text="${role.name}"
-								th:value="${role.id}"/>
+								<th:block th:each="role : ${allRoles}">
+									<div>
+										<input type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}" class="m-2">
+									</div>	
+								</th:block>
+								
+
+								
 							</th:block>
                             </div>   
                             <div class="form-group">

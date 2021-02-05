@@ -1,25 +1,28 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper" class="container-fluid">
-
-	<h1>Order Management</h1>
-
-
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
 	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addOrderModal">
   Add Order<i class="material-icons">add</i>
 	</button>
-	</div>
+	</div><div class="row">
+		<h2 class="mr-2">Orders Management</h2>
+		<th:block th:include="layout :: alerts"></th:block>
+		</div>
 	<table cellpadding="10" class="table table-striped">
 		<thead >
 			<tr>
-				<th>Order ID</th>
-				<th>Date</th>
-				<th>Total</th>
-				<th>Paid Status</th>
-				<th>Customer</th>
+				<th><a th:href="@{'/order/page/' + ${currentPage} + '?sortField=id&sortDir=' + 
+					${reverseSortDir}}"><i class="material-icons">swap_vert</i>Order ID</a></th>
+				<th><a th:href="@{'/order/page/' + ${currentPage} + '?sortField=dateTime&sortDir=' + 
+					${reverseSortDir}}"><i class="material-icons">swap_vert</i>Date</a></th>
+				<th><a th:href="@{'/order/page/' + ${currentPage} + '?sortField=total&sortDir=' + 
+					${reverseSortDir}}"><i class="material-icons">swap_vert</i>Total</a></th>
+				<th><a th:href="@{'/order/page/' + ${currentPage} + '?sortField=paidStatus&sortDir=' + 
+					${reverseSortDir}}"><i class="material-icons">swap_vert</i>Paid Status</a></th>
+				<th><a th:href="@{'/order/page/' + ${currentPage} + '?sortField=customer&sortDir=' + 
+					${reverseSortDir}}"><i class="material-icons">swap_vert</i>Customer</a></th>
 				<th>OrderDetails</th>
 				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
 				
@@ -29,16 +32,13 @@
 			<tr th:each="order : ${listOrder}">
 				<td th:text="${order.id}">Order ID</td>
 				<td th:text="${order.dateTime}">Date</td>
-				<td th:text="${order.total} + ' Ft'">Total</td>
+				<td th:text="${#numbers.formatDecimal(order.total, 3, 2, 'POINT')} + ' Ft'">Total</td>
 				<td th:text="${order.paidStatus}">PaidStatus</td>
 				<td th:text="${order.customer.name}">Customer</td>
 				<td>
-		            <p th:each="orderItem : ${order.orderItems}">
-		            	<span th:text="${orderItem.product.brands.name}">CatName</span>
-		                <span th:text="${orderItem.product.name}">Street</span>
-		                <span th:text="${orderItem.qty} + 'db'">City</span>
-		                <span th:text="${orderItem.amount} + 'Ft'">ZIP</span>
-		            </p>
+					<a th:href="@{'/orders/details/' + ${order.id}}">
+						<i class="material-icons text-info">assignment</i>
+					</a>
 		        </td>
 
 				
@@ -46,27 +46,34 @@
 					<a th:href="@{/findOrder/(id=${order.id})}" class="btn text-success editOrder">
 						<i class="material-icons">create</i></a>			
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${order.id}}">
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete_order/' + ${order.id}}">
 						<i class="material-icons text-danger">delete</i></a>
-						
-						<td sec:authorize="hasAnyAuthority('ADMIN')">
-					<button th:href="@{/findOrder/(id=${order.id})}" data-toggle="modal" type="button"class="btn text-success" data-target="#detailsModal")>
-						<i class="material-icons">create</i></button>		
-						
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<div class="container  badge " style="font-size:15px;">
+		<a th:if="${currentPage > 1}" th:href="@{'/order' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"> First</a>
+	   <span  th:unless="${currentPage > 1}">First</span>
+	   <a th:if="${currentPage > 1}" th:href="@{'/order/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+	   <span th:unless="${currentPage > 1}">Previous</span>
+	   <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+	   <a th:if="${currentPage != i}" th:href="@{'/order/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+	   <span th:unless="${currentPage != i}">[[${i}]]</span>
+	   &nbsp;
+	   </span>
+	   <a th:if="${currentPage < totalPages}" th:href="@{'/order/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+	   <span th:unless="${currentPage < totalPages}">Next</span>
+	   <a th:if="${currentPage < totalPages}" th:href="@{'/order/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+	   <span th:unless="${currentPage < totalPages}">Last</span>
+	   </div>
 	</div>
-    </div>
     
     <!-- /#page-content-wrapper -->
-    
-    
         <!-- /#page-content-wrapper -->
     
 	 <div class="modal fade" id="addOrderModal" tabindex="-1" role="dialog" aria-labelledby="addOModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addOModalLabel">Modal title</h5>
@@ -77,73 +84,118 @@
       <form action="#" th:action="@{/save_order}" th:object="${order}" method="post">
       <div class="modal-body">
       
-			<table border="0" cellpadding="10" id="myTable">
-					<tr>Customer</tr>
-					<tr><select name="customerId" th:field="*{customer}" class="form-control" >
+			<table border="0" cellpadding="10" id="myTable">		
+					
+				<tbody>
+					<td>Customer</td>
+					<tr><td><select name="customerId" th:field="*{customer}" class="form-control" >
 						<th:block th:each="customer : ${listCustomers}">
 							<option th:text="${customer.name}" th:value="${customer.id}"/>
 						</th:block>
 					</select>
+					</td>
 					</tr>
-											
-					<tr>
-					<td>Total:<input type="text" value="0" th:field="*{total}" /></td>
-				</tr>
-				<tbody>
+									
 				<td>Product:</td>	
+				<td>Quantity:</td>
 				<tr>
 					 <td><select th:name ="orderItems[0].product"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
-							<option th:text="${product.name}" th:value="${product.id}"/>
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
 						</th:block>
 					</select>
 					</td>
-					<td>Qty:
-					<input type="number" value="0"  name="orderItems[0].qty" />
+					<td>
+					<input class="form-control" type="number" value="0"  name="orderItems[0].qty" />
+					</td>
+					<td><select th:name ="orderItems[1].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td>
+					<td>
+					<input class="form-control" type="number" value="0"  name="orderItems[1].qty" />
 					</td>
 				</tr>			
 				<tr>
-					 <td><select th:name ="orderItems[1].product"  class="form-control" >
+					 <td><select th:name ="orderItems[2].product"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
-							<option th:text="${product.name}" th:value="${product.id}"/>
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
 						</th:block>
 					</select>
 					</td> 
-					<td>Qty:
-					<input type="number" value="0" name="orderItems[1].qty" />
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[2].qty" />
+					</td>
+					<td><select th:name ="orderItems[3].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[3].qty" />
 					</td>
 				</tr>
 				<tr>
-					 <td><select th:name ="orderItems[2].product"  class="form-control" >
-						<th:block th:each="product : ${listProducts}">
-							<option th:text="${product.name}" th:value="${product.id}"/>
-						</th:block>
-					</select>
-					</td> 
-					<td>Qty:
-					<input type="number" value="0" name="orderItems[2].qty" />
-					</td>
-				</tr>	
-				<tr>
-					 <td><select th:name ="orderItems[3].product"  class="form-control" >
-						<th:block th:each="product : ${listProducts}">
-							<option th:text="${product.name}" th:value="${product.id}"/>
-						</th:block>
-					</select>
-					</td> 
-					<td>Qty:
-					<input type="number" value="0" name="orderItems[3].qty" />
-					</td>
-				</tr>	
-				<tr>
 					 <td><select th:name ="orderItems[4].product"  class="form-control" >
 						<th:block th:each="product : ${listProducts}">
-							<option th:text="${product.name}" th:value="${product.id}"/>
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
 						</th:block>
 					</select>
 					</td> 
-					<td>Qty:
-					<input type="number" value="0" name="orderItems[4].qty" />
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[4].qty" />
+					</td>
+					<td><select th:name ="orderItems[5].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[5].qty" />
+					</td>
+				</tr>	
+				<tr>
+					 <td><select th:name ="orderItems[6].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input  class="form-control" type="number" value="0" name="orderItems[6].qty" />
+					</td>
+					<td><select th:name ="orderItems[7].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[7].qty" />
+					</td>
+				</tr>	
+				<tr>
+					 <td><select th:name ="orderItems[8].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[8].qty" />
+					</td>
+					<td><select th:name ="orderItems[9].product"  class="form-control" >
+						<th:block th:each="product : ${listProducts}">
+							<option th:text="${product.name} + '(' + ${product.qty} + ')'" th:value="${product.id}"/>
+						</th:block>
+					</select>
+					</td> 
+					<td>
+					<input class="form-control" type="number" value="0" name="orderItems[9].qty" />
 					</td>
 				</tr>	
 				
@@ -162,7 +214,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-outline-dark">Save</button>
       </div>
       </form>
     </div>
@@ -171,12 +223,12 @@
 
 
 
-
- <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsOModalLabel" aria-hidden="true">
+<div class=editOrder>
+ <div class="modal fade" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="detailsModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="editOrderModalLabel">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -185,6 +237,7 @@
       
 			<table border="0" cellpadding="10" id="myTable">
 				<tbody>	
+					<td><span id="id"></span></td>
 				<tr th:each="order : ${listOrder}">
 					<td>
 		            <p th:each="orderItem : ${order.orderItems}">
@@ -196,18 +249,23 @@
 				</tr>			
 				</tbody>		
 			
-			</table>
-
-
-
-			
-		
+			</table>	
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
+</div>
+
+<div class="modal" id="orderModal">
+	<div class="modal-dialog">
+		<div class="model-content">
+
+
+		</div>
+	</div>
 </div>
 
 

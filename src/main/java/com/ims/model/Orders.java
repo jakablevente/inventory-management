@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +48,7 @@ public class Orders implements java.io.Serializable{
 	    
 
 		@OneToMany(mappedBy="order",cascade=CascadeType.ALL,
-		orphanRemoval = true)
+		 orphanRemoval = true)
 	    private List<OrderItem> orderItems = new ArrayList<>();
 		
 		public Orders() {
@@ -113,7 +114,11 @@ public class Orders implements java.io.Serializable{
 		}
 
 		public void setTotal(double total) {
-			this.total = total;
+			double result = total;
+			for(OrderItem items : orderItems){
+				result += items.getQty() * items.getProduct().getPrice();
+			}
+			this.total = result;
 		}
 
 
@@ -144,6 +149,14 @@ public class Orders implements java.io.Serializable{
 
 		public void setOrderItems(List<OrderItem> orderItems) {
 			this.orderItems = orderItems;
+		}
+
+		public void cancelOrder(){
+			for(OrderItem item : orderItems){
+
+				item.cancel();
+				removeOrderItem(item);
+			}
 		}
 		
 

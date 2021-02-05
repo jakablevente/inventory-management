@@ -1,17 +1,16 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
-
-<h1>Customer Manager</h1>
-
-
 	
-	<th:block th:include="layout :: alerts"></th:block>
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="float-right mb-3">
 	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addCustomerModal">
   Add Customer<i class="material-icons">add</i>
 	</button>
-	</div>
+  </div>
+  <div class="row">
+    <h2 class="mr-2">Customers Management</h2>
+    <th:block th:include="layout :: alerts"></th:block>
+    </div>
 	<table cellpadding="10" class="table table-striped">
 		<thead >
 			<tr>

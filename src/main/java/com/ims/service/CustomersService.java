@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ims.model.Customers;
-import com.ims.model.Product;
 import com.ims.repository.CustomersRepository;
 
 @Service

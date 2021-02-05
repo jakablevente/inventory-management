@@ -26,17 +26,18 @@ public class CategoryController {
 	
 	@RequestMapping("/category")
 	public String viewCategoryPage(Model model) {
-		
-		
+			
 		return viewPage(model, 1, "categoryName", "asc");
 	}
 		
 	
 	@RequestMapping(value="/addcategory",method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute ("category") Category category,RedirectAttributes redirAttrs) {
+	public String addCategory(@ModelAttribute ("category") Category category,
+	RedirectAttributes redirAttrs) {
 		
 		categoryService.save(category);
-		redirAttrs.addFlashAttribute("success","New category created successfuly!");
+		redirAttrs.addFlashAttribute("success","New category created" +
+		"successfuly!");
 		
 		return "redirect:/category";
 	}

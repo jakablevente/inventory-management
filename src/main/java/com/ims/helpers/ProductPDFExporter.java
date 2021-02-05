@@ -1,6 +1,5 @@
 package com.ims.helpers;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class ProductPDFExporter {
 	private void writeTableHeader(PdfPTable table) {
 		
 		PdfPCell cell = new PdfPCell();
-		cell.setPadding(6);
+		cell.setPadding(2);
 		
 		  Font font = FontFactory.getFont(FontFactory.HELVETICA);
 		
@@ -67,7 +66,7 @@ public class ProductPDFExporter {
 			table.addCell(product.getBrands().getName());
 			table.addCell(product.getCategory().getCategoryName());
 			table.addCell(String.valueOf(product.getQty()));
-			table.addCell(String.valueOf(product.getPrice()));
+			table.addCell(String.valueOf(product.getPrice()) + "Ft");
 		}
 	}
 	
@@ -77,7 +76,7 @@ public class ProductPDFExporter {
          
         document.open();
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setSize(18);
+        font.setSize(14);
          
         Paragraph p = new Paragraph("Products", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
@@ -86,7 +85,7 @@ public class ProductPDFExporter {
          
         PdfPTable table = new PdfPTable(6);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {1.5f, 3.5f, 3.0f, 3.0f, 1.5f,1.5f});
+        table.setWidths(new float[] {1.0f, 3.5f, 2.5f, 3.5f, 1.5f,2.5f});
         table.setSpacingBefore(10);
          
         writeTableHeader(table);

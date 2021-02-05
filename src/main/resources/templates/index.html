@@ -59,7 +59,7 @@
 		<thead class="">
 			<tr>
 			<th>
-    			OrderID
+    			ID
 			</th>
 			<th>
     			Name
@@ -79,30 +79,26 @@
         <div class="col-xl-3 col-sm-6 py-2 ">
         <div class="card">
         <div class="card-header">New Products</div>
-            <table cellpadding="10" class="card-table table  ">
+            <table cellpadding="10" class="card-table table">
 		<thead >
 			<tr>
-			<th>
-    			Product ID
-			</th>
-			<th>
-    			Name
+			<th >
+    			ID
 			</th>
 			<th>
     			Brand
 			</th>
-				<th>
-    			Category
-			</th>			
+			<th>
+    			Name
+			</th>		
 				
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="product, iterStat : ${listProduct}" th:if="${iterStat.index >= iterStat.size-5}">
-				<td th:text="${product.id}">Product ID</td>
-				<td th:text="${product.name}">Name</td>
-				<td th:text="${product.brands.name}">Brand</td>
-				<td th:text="${product.category.categoryName}">Category</td>
+				<td th:text="${product.id}">ID</td>
+				<td th:text="${product.brands.name}"> Brand</td>
+				<td th:text="${product.name}" >Name</td>
 			</tr>
 		</tbody>
 	</table>
@@ -116,7 +112,7 @@
 		<thead class="">
 			<tr>
 			<th>
-    			CustomerID
+    			ID
 			</th>
 			<th>
     			Name
@@ -126,7 +122,7 @@
 		</thead>
 		<tbody>
 			<tr th:each="customer, iterStat : ${listCustomers}" th:if="${iterStat.index >= iterStat.size-5}">
-				<td th:text="${customer.id}">CustomerID</td>
+				<td th:text="${customer.id}">ID</td>
 				<td th:text="${customer.name}">Name</td>
 			</tr>
 		</tbody>
@@ -142,7 +138,7 @@
 		<thead>
 			<tr>
 			<th>
-    			BrandID
+    			ID
 			</th>
 			<th >
     			Name

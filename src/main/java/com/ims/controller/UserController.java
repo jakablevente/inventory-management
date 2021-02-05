@@ -41,7 +41,7 @@ public class UserController {
 							RedirectAttributes redirAttrs) {
 		
 		userService.save(user);
-		redirAttrs.addFlashAttribute("success","Új felhasználó sikeresen hozzáadva!");
+		redirAttrs.addFlashAttribute("success","New user added!");
 		
 		return "redirect:/users";
 	}
@@ -51,19 +51,30 @@ public class UserController {
 							 RedirectAttributes redirAttrs) {
 		try {
 			userService.delete(id);
-			redirAttrs.addFlashAttribute("success", "Felhasználó sikeresen törölve!");
+			redirAttrs.addFlashAttribute("success", "User removed successfully!");
 			return "redirect:/users";
 		} catch (Exception e) {
-			redirAttrs.addFlashAttribute("errorMsg", "Ezt a felhasználót nem lehet törölni!");
+			redirAttrs.addFlashAttribute("errorMsg", "You can't delete this user!");
 			return "redirect:/users";
 		}
 	}
 	
 	@RequestMapping("/findUser")
 	@ResponseBody
-	public User findOne(Integer id) {
-		
+	public User findOne(Integer id, Model model) {
+
 		return userService.get(id);
+
+		
+	}
+
+	@GetMapping("/users/edit/{id}")
+	public String editUserForm(@PathVariable Integer id, Model model) {
+		
+		User user = userService.get(id);
+		model.addAttribute("listRoles", roleRepository.findAll());
+		model.addAttribute("user", user);
+		return "edit_user";
 	}
 	
 	

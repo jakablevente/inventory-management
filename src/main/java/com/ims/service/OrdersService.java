@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ims.model.Customers;
 import com.ims.model.OrderItem;
 import com.ims.model.Orders;
-import com.ims.model.Product;
-import com.ims.repository.CustomersRepository;
 import com.ims.repository.OrderRepository;
-import com.ims.repository.ProductRepository;
 
 @Service
 @Transactional
@@ -62,8 +62,30 @@ public class OrdersService {
 		return orderRepo.findById(id).get();
 	}
 	
+	@Transactional
 	public void delete (int id) {
+		
+		Orders order = orderRepo.findById(id).get();
+		order.setCustomer(null);
+		for(OrderItem item : order.getOrderItems()){
+
+			item.getProduct().addStock(item.getQty());
+			item.setProduct(null);
+			
+			
+		}
+		
 		orderRepo.deleteById(id);
+	}
+
+	public Page<Orders> listAll(int pageNum, String sortField, String sortDir){
+		int pageSize = 8;
+		
+		Pageable pageable = PageRequest.of(pageNum -1, pageSize,
+				sortDir.equals("asc") ? Sort.by(sortField).ascending()
+										: Sort.by(sortField).descending());
+		
+		return orderRepo.findAll(pageable);
 	}
 	
 

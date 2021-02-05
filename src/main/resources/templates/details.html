@@ -1,11 +1,58 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-<div id="page-content-wrapper" class="container-fluid">
+<div id="page-content-wrapper">
+    <div class="col-sm-8">
+    <table border="0" cellpadding="10">
+        <tr>
+            <td class="font-weight-bold">Order ID:</td>
+            <td><span  th:text="${order.id}" /></td>
+        </tr>		
+        <tr>
+            <td class="font-weight-bold">Customer:</td>
+            <td><span th:text="${order.customer.name}"></span></td>
+        </tr>	
+        <tr>
+            <td class="font-weight-bold"> Date:</td>
+            <td><span  th:text="${order.dateTime}" /></td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold">Total:</td>
+            <td><span  th:text="${#numbers.formatDecimal(order.total, 3, 2, 'POINT')} + ' Ft'"/></td>
+        </tr>		
+        <tr>
+        <td class="font-weight-bold">Paid status:</td>
+        <td><span th:text="${order.paidStatus}"></span></td>
+        
+       </tr>
+    </table>
+    <table class="table table-striped">
+        <thead>
+       <tr>
+        <th>Brand</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price/Qty</th>
+        <th>Amount</th>
 
-
-Asd
-
-
+    </tr>
+    </thead>
+       <tr th:each="orderItem : ${order.orderItems}">
+        <td th:text="${orderItem.product.brands.name}">Brand</td>
+        <td th:text="${orderItem.product.name}">Product</td>
+        <td th:text="${orderItem.qty} + 'db'">Qty</td>
+        <td th:text="${#numbers.formatDecimal(orderItem.product.price, 3, 2, 'POINT')} + ' Ft'">Price/qty</td>
+        <td th:text="${#numbers.formatDecimal(orderItem.amount, 3, 2, 'POINT')} + ' Ft'">Price</td>
+       </tr>
+      <!-- <td>
+        <p th:each="orderItem : ${order.orderItems}">
+            <span th:text="${orderItem.product.brands.name}">CatName</span>
+            <span th:text="${orderItem.product.name}">Street</span>
+            <span th:text="${orderItem.qty} + 'db'">City</span>
+            <span th:text="${orderItem.amount} + 'Ft'">ZIP</span>
+        </p>
+    </td> -->
+    </table>
 </div>
+</body>
 <th:block th:include="layout :: script"></th:block>

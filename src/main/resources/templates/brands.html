@@ -1,18 +1,16 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-
-
-    <h1 class="ml-2">Brand Manager</h1>
-	
-	<th:block th:include="layout :: alerts"></th:block>
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
 		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addBrandModal">
   Add brand<i class="material-icons">add</i>
 </button>
 </div>
-	
+<div class="row">
+  <h2 class="mr-2">Brands Management</h2>
+  <th:block th:include="layout :: alerts"></th:block>
+  </div>
 	<table class="table table-striped " cellpadding="10">
 		<thead >
 			<tr>

@@ -81,10 +81,7 @@ public class BrandsController {
 	    
 		model.addAttribute("listBrands", listBrands);
 		model.addAttribute("brand", brand);
-	    
-
-
-	     
+	    	     
 	    return "brands";
 	}
 	

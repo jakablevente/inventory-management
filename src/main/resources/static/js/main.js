@@ -55,21 +55,23 @@
 			});
 			$('.editCustomerForm #editCustomerModal').modal();
 		});
-		
-		$('.editUser').on('click',function(event){
+		$('.editCompanyButton').on('click',function(event){
 			event.preventDefault();
 			
 			href=$(this).attr('href');
 			
-			$.get(href,function(user, status){
-				$('.editUserForm #id').val(user.id);
-				$('.editUserForm #username').val(user.username);
-				$('.editUserForm #password').val(user.password);
-				$('.editUserForm #roles').val(user.roles.getRoles().id);
-
+			$.get(href,function(company, status){
+				$('.editCompanyForm #id').val(company.id);
+				$('.editCompanyForm #companyName').val(company.companyName);
+				$('.editCompanyForm #address').val(company.address);
+				$('.editCompanyForm #country').val(company.country);
+				$('.editCompanyForm #phone').val(company.phone);
+				$('.editCompanyForm #currency').val(company.currency);
 			});
-			$('.editUserForm #editUserModal').modal();
+			$('.editCompanyForm #editCompanyModal').modal();
 		});
+		
+
 		
 		   $("#menu-toggle").click(function(e) {
       e.preventDefault();
@@ -141,7 +143,24 @@ return isFormValid;
     });
 return isFormValid;
 	});
-	
+
+
+	$('.editOrder').on('click',function(event){
+			event.preventDefault();
+			
+			href=$(this).attr('href');
+			
+			$.get(href,function(user, status){
+				$('.myTable #id').val(order.id);
+				$('.editOrderForm #customer').val(order.customer);
+				$('.editOrderForm #total').val(order.total);
+				$('.editOrderForm #paidstatus').val(ordar.paidStatus);
+
+			});
+			$(' #editOrderModal').modal();
+		});
+		
+
 
 
 	 });

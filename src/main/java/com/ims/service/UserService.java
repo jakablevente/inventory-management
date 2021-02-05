@@ -21,7 +21,7 @@ public class UserService {
 	private UserRepository userRepo;
 	
 	@Autowired 
-    private BCryptPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	public List<User> listAll(){
 		
@@ -39,9 +39,11 @@ public class UserService {
 	}
 	
 	public void save (User user) {
+
+		if(user.getPassword().length() < 15){
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setEnabled(true);
+		user.setPassword(encodedPassword);
+	}
 		
 		userRepo.save(user);
 	}

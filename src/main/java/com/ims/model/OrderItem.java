@@ -75,6 +75,7 @@ public class OrderItem implements java.io.Serializable{
 		this.qty = qty;
 	}
 	public double getAmount() {
+		
 		return amount;
 	}
 	public void setAmount(int qty, double price ){
@@ -83,6 +84,13 @@ public class OrderItem implements java.io.Serializable{
 	
 	public void setAmount(double price) {
 		this.amount = price;
+	}
+
+
+	public void cancel(){
+
+		getProduct().addStock(this.qty);
+		this.product = null;
 	}
 	
 	

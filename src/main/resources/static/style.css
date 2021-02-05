@@ -4,7 +4,7 @@
 
 #sidebar-wrapper {
   min-height: 100vh;
-  margin-left: -20rem;
+  margin-left: -17rem;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
@@ -17,7 +17,7 @@
 }
 
 #sidebar-wrapper .list-group {
-  width: 20rem;
+  width: 17rem;
   font-size:1.1rem;
 }
 
@@ -40,7 +40,7 @@
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    margin-left: -20rem;
+    margin-left: -17rem;
   }
 }
 
@@ -73,5 +73,13 @@
 {
     border: 1px solid red !important;
 }
+
+.card-table{
+
+  height:350px;
+  font-size:15px;
+
+}
+
 
 

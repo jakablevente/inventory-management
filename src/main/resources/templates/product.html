@@ -1,12 +1,7 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
 
-
-<h1 class="mt-4 ml-4">Product Manager</h1>
-
-
-	<th:block th:include="layout :: alerts"></th:block>
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
 	<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addProductModal">
   Add product <i class="material-icons">add</i>
@@ -16,6 +11,10 @@
 	<i class="material-icons">print</i>
 </a>
 	</div>
+	<div class="row">
+		<h2 class="mr-2">Products Management</h2>
+		<th:block th:include="layout :: alerts"></th:block>
+		</div>
 	<table cellpadding="10" class="table table-striped ">
 		<thead >
 			<tr>
@@ -168,27 +167,29 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="col-form-label" for="id">ID:</label>
-                                <input class="form-control" id="id" name="id" type="text" value=""/>
+                                <input class="form-control" id="id"  readonly name="id" type="text" value=""/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label" for="name">Name:</label>
                                 <input class="form-control" id="name" th:field="*{name}" name="name"   type="text" value=""/>
                             </div>
                              <div class="form-group">
-                                <label class="col-form-label" for="brand">Brand:</label>
-                                <select th:field="*{brands}" id="brandSelect" >
+                                
+                               <!-- <select th:field="*{brands}" id="brandSelect" >
 									<th:block th:each="brands : ${listBrands}">
 										<option th:text="${brands.name}" th:value="${brands.id}" name="brand" id="brand"/>
 									</th:block>
-								</select>
+								</select> -->
+								<input type="text" class="form-control d-none" id="brandSelect" readonly th:field="*{brands.id}">
                             </div>
                              <div class="form-group">
-                                <label class="col-form-label" for="id">Category:</label>
-                                <select th:name="*{category}" id="catSelect">
+                                
+                              <!--  <select th:name="*{category}" id="catSelect">
 									<th:block th:each="category : ${listCategories}">
 										<option th:text="${category.categoryName}" th:value="${category.id}" name="category" id="category"/>
 									</th:block>
-								</select>
+								</select> -->
+								<input type="text" class="form-control d-none" id="catSelect" readonly th:field="*{category.id}">
                             </div>
                              <div class="form-group">
                                 <label class="col-form-label" for="price">Price:</label>

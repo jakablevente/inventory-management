@@ -1,15 +1,5 @@
 <th:block th:include="layout :: top"></th:block>
 <th:block th:include="layout :: menu"></th:block>
-
-
-
-	<h1>Category Manager</h1>
-	
-	
-	
-	
-	
-	<th:block th:include="layout :: alerts"></th:block>
 	
 	 <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -42,12 +32,16 @@
 </div>
 
 
-<div class="container">
+<div class="container mt-4">
 <div sec:authorize="hasAnyAuthority('ADMIN')" class="mb-3 float-right">
 		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addCategoryModal">
   Add category<i class="material-icons">add</i>
 </button>
-	</div>
+  </div>
+  <div class="row">
+    <h2 class="mr-2">Categories Management</h2>
+    <th:block th:include="layout :: alerts" ></th:block>
+    </div>
 	<table class="table table-striped"  cellpadding="10">
 		<thead >
 			<tr>
